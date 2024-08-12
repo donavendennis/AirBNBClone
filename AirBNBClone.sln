@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBNBClone", "AirBNBClone\AirBNBClone.csproj", "{44C25AC5-ADC2-49EE-A903-2CA2DC679EC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirBNBClone", "AirBNBClone\AirBNBClone.csproj", "{44C25AC5-ADC2-49EE-A903-2CA2DC679EC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{BF5FA977-1829-43A5-A56C-46A003158EF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{BF5FA977-1829-43A5-A56C-46A003158EF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{4A038289-26AB-40B4-9640-4D800DED92EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{4A038289-26AB-40B4-9640-4D800DED92EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{8D6EAE90-6BEE-4317-B9A8-C04240400B04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "Utility\Utility.csproj", "{8D6EAE90-6BEE-4317-B9A8-C04240400B04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
