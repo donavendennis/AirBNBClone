@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirBNBClone", "AirBNBClone\AirBNBClone.csproj", "{44C25AC5-ADC2-49EE-A903-2CA2DC679EC2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A038289-26AB-40B4-9640-4D800DED92EE} = {4A038289-26AB-40B4-9640-4D800DED92EE}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{BF5FA977-1829-43A5-A56C-46A003158EF5}"
 EndProject
