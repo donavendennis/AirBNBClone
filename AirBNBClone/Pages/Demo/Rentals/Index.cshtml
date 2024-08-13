@@ -1,0 +1,32 @@
+﻿@page
+@model AirBNBClone.Pages.Demo.Rentals.IndexModel
+@{
+}
+
+<h1>@Model.objRental.Id</h1>
+<!--Show the rest-->
+<h3>@Model.objRental.State</h3>
+<p>@Model.objRental.Zip</p>
+<p>@Model.objRental.City</p>
+<p>@Model.objRental.Address</p>
+<p>@Model.objRental.Phone</p>
+<p>@Model.objRental.OwnerId</p>
+@foreach (var (obj, amount) in Model.objFeeList.Zip(Model.objFeeAmountList, (a,b)=>(a,b)))
+{
+    <div>
+        <h3>@obj.Name</h3>
+        <p>@obj.Description</p>
+        <p>@obj.Id</p>
+        <p>@amount</p>
+    </div>
+}
+
+<!--Now for Amenities-->
+@foreach (var obj in Model.objAmenityList)
+{
+    <div>
+        <h3>@obj.Name</h3>
+        <p>@obj.Description</p>
+        <p>@obj.Id</p>
+    </div>
+}
