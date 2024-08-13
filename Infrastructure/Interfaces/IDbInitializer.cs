@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Interfaces
 {
-    internal interface IDbInitializer
+    public interface IDbInitializer
     {
         void Initialize();
     }
