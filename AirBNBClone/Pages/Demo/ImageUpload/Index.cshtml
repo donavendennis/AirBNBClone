@@ -1,0 +1,9 @@
+﻿@page
+@model AirBNBClone.Pages.Demo.ImageUpload.IndexModel
+@{
+}
+<form method="post" enctype="multipart/form-data">
+    <input type="number" asp-for="objPhoto.Id" />
+    <input type="file" asp-for="objPhoto.ImageData" />
+    <button type="submit">Upload</button>
+</form>
