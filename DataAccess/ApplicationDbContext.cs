@@ -19,6 +19,6 @@ namespace DataAccess
         public DbSet<Price> Prices { get; set; }
         public DbSet<Rental> Rental { get; set; }
         public DbSet<RentalAmenity> RentalAmenities { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Reservation> Reservation { get; set; }
     }
 }
