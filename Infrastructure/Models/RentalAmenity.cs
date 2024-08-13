@@ -1,15 +1,15 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastructure.Models
 {
+    [PrimaryKey(nameof(RentalId), nameof(AmenityId))]
     public class RentalAmenity
     {
-        [Key]
         public int RentalId { get; set; }
 
-        [Key]
         public int AmenityId { get; set; }
 
         [ForeignKey("RentalId")]
