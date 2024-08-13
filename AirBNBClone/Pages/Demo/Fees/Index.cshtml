@@ -1,0 +1,12 @@
+﻿@page
+@model AirBNBClone.Pages.Demo.Fees.IndexModel
+@{
+}
+@foreach (var obj in Model.objFeeList)
+{
+    <div>
+        <h3>@obj.Name</h3>
+        <p>@obj.Description</p>
+        <p>@obj.Id</p>
+    </div>
+}
