@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Infrastructure.Models
 {
-    public class Reservations
+    public class Reservation
     {
         [Key]
         public int Id { get; set; }
