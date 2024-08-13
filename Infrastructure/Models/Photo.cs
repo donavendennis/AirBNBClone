@@ -11,7 +11,9 @@ namespace Infrastructure.Models
 
         public int RentalId { get; set; }
 
-        public string? ImageUrl { get; set; }
+        public byte[]? ImageData { get; set; }
+
+        public string ImageType { get; set; }
 
         [ForeignKey("RentalId")]
         public Rental? Rental { get; set; }
