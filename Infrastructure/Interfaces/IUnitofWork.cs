@@ -4,20 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Interfaces
 {
-    internal interface IUnitofWork
+    public interface IUnitOfWork
     {
-        public DbSet<Amenity> Amenity { get; set; }
-        public DbSet<ApplicationUser> ApplicationUser { get; set; }
-        public DbSet<Discount> Discount { get; set; }
-        public DbSet<Fee> Fee { get; set; }
-        public DbSet<FeeRental> FeeRental { get; set; }
-        public DbSet<Photo> Photo { get; set; }
-        public DbSet<Price> Price { get; set; }
-        public DbSet<Rental> Rental { get; set; }
-        public DbSet<RentalAmenity> RentalAmenity { get; set; }
-        public DbSet<Reservation> Reservation { get; set; }
+        public IGenericRepository<Amenity> Amenity { get; }
+        public IGenericRepository<ApplicationUser> ApplicationUser { get; }
+        public IGenericRepository<Discount> Discount { get; }
+        public IGenericRepository<Fee> Fee { get; }
+        public IGenericRepository<FeeRental> FeeRental { get; }
+        public IGenericRepository<Photo> Photo { get; }
+        public IGenericRepository<Price> Price { get; }
+        public IGenericRepository<Rental> Rental { get; }
+        public IGenericRepository<RentalAmenity> RentalAmenity { get; }
+        public IGenericRepository<Reservation> Reservation { get; }
     }
 }
