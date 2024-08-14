@@ -57,8 +57,8 @@ namespace DataAccess.DbInitializer
 
                 _userManager.CreateAsync(new ApplicationUser
                 {
-                    UserName = "superadmin@test.com",
-                    Email = "superadmin@test.com",
+                    UserName = "admin@test.com",
+                    Email = "admin@test.com",
                     FirstName = "Super",
                     LastName = "Admin",
                     PhoneNumber = "18015556919",
@@ -86,9 +86,35 @@ namespace DataAccess.DbInitializer
                     Id = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5"
                 }, "Renter123*").GetAwaiter().GetResult();
 
-                //ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "superadmin@test.com");
+                // make a owner using similar testing email
+                _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "owner@test.com",
+                    Email = "owner@test.com",
+                    FirstName = "Owner",
+                    LastName = "Owner",
+                    PhoneNumber = "18015556919",
+                    StreetAddress = "123 Main Street",
+                    State = "UT",
+                    PostalCode = "84408",
+                    City = "Ogden",
+                    EmailConfirmed = true,
+                    Id = "cafecafe-6c0d-4d3e-8d1d-1d9444f119c6"
+                }, "Owner123*").GetAwaiter().GetResult();
 
-                //_userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "superadmin@test.com");
+
+                _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+
+                // now for renter
+
+                user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "renter@test.com");
+                _userManager.AddToRoleAsync(user, SD.RenterRole).GetAwaiter().GetResult();
+
+                // now for owner
+
+                user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "owner@test.com");
+                _userManager.AddToRoleAsync(user, SD.OwnerRole).GetAwaiter().GetResult();
 
                 var Amenities = new List<Amenity>
                 {
@@ -204,7 +230,7 @@ namespace DataAccess.DbInitializer
 
                 // Price
 
-                
+
                 var Prices = new List<Price>
                 {
                     new Price { RentalId = 1, Start = DateOnly_Today.AddDays(-10), End = DateOnly_Today.AddDays(100), Amount = 300, Priority = 1 },
@@ -273,7 +299,7 @@ namespace DataAccess.DbInitializer
 
                 // reservations
 
-               
+
                 var Reservations = new List<Reservation>
                 {
                     new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(5), End = DateOnly_Today.AddDays(10), Confirm = true },
