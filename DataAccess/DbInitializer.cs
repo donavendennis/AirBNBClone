@@ -99,7 +99,9 @@ namespace DataAccess.DbInitializer
     OwnerId: A string property representing the owner's identifier.*/
                 var Rentals = new List<Rental>
                 {
-                    new Rental { State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4" },
+                    new Rental { Title = "My Test House (posh)", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4" },
+                    new Rental { Title = "My Test House (cheap)", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4" },
+
                 };
 
                 foreach (var r in Rentals)
@@ -112,7 +114,8 @@ namespace DataAccess.DbInitializer
                 {
                     new RentalAmenity { RentalId = 1, AmenityId = 1 },
                     new RentalAmenity { RentalId = 1, AmenityId = 2 },
-                    new RentalAmenity { RentalId = 1, AmenityId = 3 }
+                    new RentalAmenity { RentalId = 1, AmenityId = 3 },
+                    new RentalAmenity { RentalId = 2, AmenityId = 1 },
                 };
 
                 foreach (var ra in RentalAmenities)
@@ -132,9 +135,10 @@ namespace DataAccess.DbInitializer
 
                 var Discounts = new List<Discount>
                 {
-                    new Discount { RentalId = 1, Daycount = 1, Percentage = 10 },
-                    new Discount { RentalId = 1, Daycount = 2, Percentage = 20 },
-                    new Discount { RentalId = 1, Daycount = 3, Percentage = 30 }
+                    new Discount { RentalId = 1, Daycount = 7, Percentage = 10 },
+                    new Discount { RentalId = 1, Daycount = 14, Percentage = 20 },
+                    new Discount { RentalId = 1, Daycount = 30, Percentage = 30 },
+                    new Discount { RentalId = 2, Daycount = 365, Percentage = 1 }
                 };
 
                 foreach (var d in Discounts)
@@ -168,10 +172,11 @@ namespace DataAccess.DbInitializer
                  */
 
                 var FeeRentals = new List<FeeRental>
-                    {
-                    new FeeRental { FeeId = 1, RentalId = 1 },
-                    new FeeRental { FeeId = 2, RentalId = 1 },
-                    new FeeRental { FeeId = 3, RentalId = 1 }
+                {
+                    new FeeRental { FeeId = 1, RentalId = 1, Amount = 1 },
+                    new FeeRental { FeeId = 1, RentalId = 2, Amount = 10 },
+                    new FeeRental { FeeId = 2, RentalId = 2, Amount = 10 },
+                    new FeeRental { FeeId = 3, RentalId = 2, Amount = 10 }
                 };
 
                 foreach (var fr in FeeRentals)
@@ -192,9 +197,10 @@ Rental: A nullable Rental object property that is linked to the RentalId field u
 
                 var Prices = new List<Price>
                 {
-                    new Price { RentalId = 1, Start = DateTime.Now, End = DateTime.Now.AddDays(1), Amount = 100, Priority = 1 },
-                    new Price { RentalId = 1, Start = DateTime.Now.AddDays(1), End = DateTime.Now.AddDays(2), Amount = 200, Priority = 2 },
-                    new Price { RentalId = 1, Start = DateTime.Now.AddDays(2), End = DateTime.Now.AddDays(3), Amount = 300, Priority = 3 }
+                    new Price { RentalId = 1, Start = DateTime.Now, End = DateTime.Now.AddDays(100), Amount = 300, Priority = 1 },
+                    new Price { RentalId = 1, Start = DateTime.Now.AddDays(20), End = DateTime.Now.AddDays(40), Amount = 250, Priority = 2 },
+                    new Price { RentalId = 1, Start = DateTime.Now.AddDays(25), End = DateTime.Now.AddDays(35), Amount = 200, Priority = 3 },
+                    new Price { RentalId = 2, Start = DateTime.Now, End = DateTime.Now.AddDays(100), Amount = 100, Priority = 1 }
                 };
 
                 foreach (var p in Prices)
@@ -219,7 +225,8 @@ Rental: A nullable Rental object property that is linked to the RentalId field u
                 {
                     new Photo { RentalId = 1, ImageData = bytes, ImageType = "image/jpeg" },
                     new Photo { RentalId = 1, ImageData = bytes, ImageType = "image/jpeg" },
-                    new Photo { RentalId = 1, ImageData = bytes, ImageType = "image/jpeg" }
+                    new Photo { RentalId = 1, ImageData = bytes, ImageType = "image/jpeg" },
+                    new Photo { RentalId = 2, ImageData = bytes, ImageType = "image/jpeg" }
                 };
 
                 foreach (var p in Photos)

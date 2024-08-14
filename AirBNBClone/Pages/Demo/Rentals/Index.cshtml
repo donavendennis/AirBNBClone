@@ -1,0 +1,32 @@
+﻿@page
+@model AirBNBClone.Pages.Demo.Rentals.IndexModel
+@{
+}
+<h1>@Model.objRental.Title</h1>
+<h3>Rental Info Debug</h3>
+
+<p>Rental ID <b>@Model.objRental.Id</b> is located in <b>@Model.objRental.City</b> city, <b>@Model.objRental.State</b> state (<b>@Model.objRental.Zip</b>), address: <b>@Model.objRental.Address</b>. </p>
+
+<p>The owner is <b>@Model.objRental.OwnerId</b> and the phone number is <b>@Model.objRental.Phone</b>.</p>
+
+<h3>Rental Fees Debug</h3>
+@foreach (var (obj, amount) in Model.objFeeList.Zip(Model.objFeeAmountList, (a, b) => (a, b)))
+{
+    <p><b>@obj.Name</b> Fee $<b>@amount</b> (ID <b>@obj.Id</b>) is charged: <b>@obj.Description</b>.</p>
+}
+<h3>Rental Amenities Debug</h3>
+<!--Now for Amenities-->
+@foreach (var obj in Model.objAmenityList)
+{
+    <p>The rental offers <b>@obj.Name</b> (ID <b>@obj.Id</b>) which is <b>@obj.Description</b>.</p>
+}
+<h3>Rental Discounts Debug</h3>
+@foreach (var obj in Model.objDiscountList)
+{
+    <p>Discount of <b>@obj.Percentage</b> for <b>@obj.Daycount</b> days.</p>
+}
+<h3>Rental Images Debug</h3>
+@foreach (var obj in Model.objPhotoList)
+{
+    <img src="data:@obj.ImageType;base64,@(Convert.ToBase64String(obj.ImageData))" />
+}
