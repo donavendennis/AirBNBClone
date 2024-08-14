@@ -13,7 +13,8 @@ namespace AirBNBClone.Pages
 
         public void OnGet()
         {
-
+            // redirect to /Search
+            Response.Redirect("/Search");
         }
     }
 }

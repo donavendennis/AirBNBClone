@@ -122,6 +122,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("PrimaryImage")
+                        .HasColumnType("bit");
+
                     b.Property<int>("RentalId")
                         .HasColumnType("int");
 

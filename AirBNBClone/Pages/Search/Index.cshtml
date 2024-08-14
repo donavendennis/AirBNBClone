@@ -114,25 +114,28 @@
 </form>
 
 <div class="row" data-masonry='{"percentPosition": true }'>
-    @foreach (var obj in Model.objRentalList)
+    @foreach (var megaObj in Model.objMegaRentalInfoList)
     {
+        // get the image with RentalId matching, PrimaryImage = true
         <div class="col-sm-6 col-lg-4 mb-4">
 
             <div class="card">
-
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96" /><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+                <!--Now use an image-->
+                <img class="card-img-top" src="/Images?id=@megaObj.ImageId" alt="Image cap">
                 <div class="card-body">
-                    <h5 class="card-title">@obj.Title</h5>
+                    <h5 class="card-title">@megaObj.Rental.Title</h5>
+                    <h6>@megaObj.Rental.Beds Beds, @megaObj.Rental.Baths Baths</h6>
                     <div class="card-text ">
-                        <strong>State:</strong><p>@obj.State</p>
-                        <strong>Zip:</strong><p>@obj.Zip</p>
-                        <strong>City:</strong><p>@obj.City</p>
-                        <strong>Address:</strong><p>@obj.Address</p>
-                        <strong>Owner:</strong><p>@obj.OwnerId</p>
-                        <strong>Phone:</strong><p>@obj.Phone</p>
+                        <strong>Country:</strong><p>@megaObj.Rental.Country</p>
+                        <strong>State:</strong><p>@megaObj.Rental.State</p>
+                        <strong>Zip:</strong><p>@megaObj.Rental.Zip</p>
+                        <strong>City:</strong><p>@megaObj.Rental.City</p>
+                        <strong>Address:</strong><p>@megaObj.Rental.Address</p>
+                        <strong>Owner:</strong><p>@megaObj.OwnerName</p>
+                        <strong>Phone:</strong><p>@megaObj.PhoneNumber</p>
                     </div>
-                    <a href="/RentalDetails" class="btn btn-primary">View Details</a> <!--You will need to enter in the ID here!!-->
-                    <a href="#" class="btn btn-secondary">Contact Owner</a>
+                    <a asp-page="/RentalDetails" asp-route-Id="@megaObj.Rental.Id" class="btn btn-primary">View Details</a>
+                    <a href="https://wa.me/@megaObj.PhoneNumber" class="btn btn-secondary">Contact Owner</a>
                 </div>
 
             </div>
