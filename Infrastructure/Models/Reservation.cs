@@ -15,10 +15,10 @@ namespace Infrastructure.Models
         public int RentalId { get; set; }
 
         [Required]
-        public DateTime Start { get; set; }
+        public DateOnly Start { get; set; }
 
         [Required]
-        public DateTime End { get; set; }
+        public DateOnly End { get; set; }
 
         [Required]
         public bool Confirm { get; set; }

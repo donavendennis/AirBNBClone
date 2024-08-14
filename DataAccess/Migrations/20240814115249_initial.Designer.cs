@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240814091510_initial")]
+    [Migration("20240814115249_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -146,8 +146,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("End")
+                        .HasColumnType("date");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -155,8 +155,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("RentalId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Start")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -244,17 +244,18 @@ namespace DataAccess.Migrations
                     b.Property<bool>("Confirm")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("End")
+                        .HasColumnType("date");
 
                     b.Property<int>("RentalId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Start")
+                        .HasColumnType("date");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
