@@ -1,63 +1,131 @@
 ﻿@page
-@model AirBNBClone.Pages.SearchPage.IndexModel
+@model IndexModel
 @{
+    ViewData["Title"] = "Search";
 }
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <main class="px-3">
-        <h1>Search For your destination</h1>
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-sm-5 col-md-6">
-                    <form>
-                        <div class="mb-3">
-                            <label for="Location" class="form-label">Country</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">                       
-                        </div>
-                        <div class="mb-3">
-                            <label for="Location" class="form-label">City</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">                        
-                        </div>
-                        <div class="mb-3">
-                            <label for="Location" class="form-label">Address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleSelect" class="form-label">City</label>
-                            <select class="form-select" id="exampleSelect">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleSelect" class="form-label">Select menu</label>
-                            <select class="form-select" id="exampleSelect">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleSelect" class="form-label">Select menu</label>
-                            <select class="form-select" id="exampleSelect">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+
+<h2>Search</h2>
+
+<form method="post" class="form-inline">
+    <div class="form-row d-flex align-items-center justify-content-start flex-wrap w-100">
+        <!-- First Row -->
+        <div class="col-auto mx-1">
+            <input type="text" class="form-control mb-2" name="Country" placeholder="Country" />
+        </div>
+        <div class="col-auto mx-1">
+            <input type="text" class="form-control mb-2" name="City" placeholder="City" />
+        </div>
+        <div class="col-auto mx-1">
+            <input type="date" class="form-control mb-2" name="StartDate" placeholder="Start Date" />
+        </div>
+        <div class="col-auto mx-1">
+            <input type="date" class="form-control mb-2" name="EndDate" placeholder="End Date" />
+        </div>
+        <div class="col-auto mx-1">
+            <select class="form-control mb-2" name="Beds">
+                <option value="">Beds</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="col-auto mx-1">
+            <select class="form-control mb-2" name="Baths">
+                <option value="">Baths</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row d-flex align-items-center justify-content-start flex-wrap w-100">
+        <!-- Second Row (Amenities) -->
+        <div class="col-auto mx-1">
+            <select class="form-control mb-2" name="Amenities">
+                <option value="">Extra amenities</option>
+                <option value="Hot tub">Hot tub</option>
+                <option value="Pool">Pool</option>
+                <option value="Pool Table">Pool Table</option>
+                <option value="Bar">Bar</option>
+                <option value="Sauna">Sauna</option>
+                <option value="Back Yard">Back Yard</option>
+                <option value="Cinema">Cinema</option>
+            </select>
+        </div>
+        <div class="col-auto mx-1">
+            <select class="form-control mb-2" name="Amenities">
+                <option value="">Extra amenities</option>
+                <option value="Hot tub">Hot tub</option>
+                <option value="Pool">Pool</option>
+                <option value="Pool Table">Pool Table</option>
+                <option value="Bar">Bar</option>
+                <option value="Sauna">Sauna</option>
+                <option value="Back Yard">Back Yard</option>
+                <option value="Cinema">Cinema</option>
+            </select>
+        </div>
+        <div class="col-auto mx-1">
+            <select class="form-control mb-2" name="Amenities">
+                <option value="">Extra amenities</option>
+                <option value="Hot tub">Hot tub</option>
+                <option value="Pool">Pool</option>
+                <option value="Pool Table">Pool Table</option>
+                <option value="Bar">Bar</option>
+                <option value="Sauna">Sauna</option>
+                <option value="Back Yard">Back Yard</option>
+                <option value="Cinema">Cinema</option>
+            </select>
+        </div>
+        <div class="col-auto mx-1">
+            <select class="form-control mb-2" name="Amenities">
+                <option value="">Extra amenities</option>
+                <option value="Hot tub">Hot tub</option>
+                <option value="Pool">Pool</option>
+                <option value="Pool Table">Pool Table</option>
+                <option value="Bar">Bar</option>
+                <option value="Sauna">Sauna</option>
+                <option value="Back Yard">Back Yard</option>
+                <option value="Cinema">Cinema</option>
+            </select>
+        </div>
+        <div class="col-auto mx-1">
+            <select class="form-control mb-2" name="Amenities">
+                <option value="">Extra amenities</option>
+                <option value="Hot tub">Hot tub</option>
+                <option value="Pool">Pool</option>
+                <option value="Pool Table">Pool Table</option>
+                <option value="Bar">Bar</option>
+                <option value="Sauna">Sauna</option>
+                <option value="Back Yard">Back Yard</option>
+                <option value="Cinema">Cinema</option>
+            </select>
+        </div>
+        <div class="col-auto mx-1">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+    </div>
+</form>
+
+<div class="row" data-masonry='{"percentPosition": true }'>
+<div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96" /><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+            <div class="card-body">
+                <h5 class="card-title">INSERT RENTAL TITLE HERE</h5>
+                <div class="card-text ">
+                    <strong>State:</strong><p>INSERT STATE HERE</p>
+                    <strong>Zip:</strong><p>INSERT ZIP HERE</p>
+                    <strong>City:</strong><p>INSERT CITY HERE</p>
+                    <strong>Address:</strong><p>INSERT ADDRESS HERE</p>
+                    <strong>Owner:</strong><p>INSERT OWNER ID NAME HERE</p>
+                    <strong>Phone:</strong><p>INSERT PHONE HERE</p>
                 </div>
-                <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-                    <div class="mb-3">
-                        <label for="Location" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    </div>
-                </div>
+                <a href="#" class="btn btn-primary">View Details</a>
+                <a href="#" class="btn btn-secondary">Contact Owner</a>
             </div>
         </div>
-    </main>
-</div>
+ </div>
