@@ -3,12 +3,11 @@ using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AirBNBClone.Pages.Rentals
+namespace AirBNBClone.Pages.Demo.Rentals
 {
     public class IndexModel : PageModel
     {
         private readonly UnitOfWork _unitOfWork;
-        public IEnumerable<Rental> objRentalList;
 
         public IndexModel(UnitOfWork unitOfWork)
         {
@@ -18,6 +17,8 @@ namespace AirBNBClone.Pages.Rentals
             objFeeAmountList = new List<int>();
             objAmenityList = new List<Amenity>();
             objRentalAmenityList = new List<RentalAmenity>();
+            objPhotoList = new List<Photo>();
+            objDiscountList = new List<Discount>();
         }
 
         public Rental objRental;
@@ -27,7 +28,9 @@ namespace AirBNBClone.Pages.Rentals
 
         public List<Amenity> objAmenityList;
         public List<RentalAmenity> objRentalAmenityList;
+        public List<Photo> objPhotoList;
 
+        public List<Discount> objDiscountList;
         public IActionResult OnGet(int id)
         {
             objRental = _unitOfWork.Rental.GetById(id);
@@ -45,7 +48,15 @@ namespace AirBNBClone.Pages.Rentals
             {
                 objAmenityList.Add(_unitOfWork.Amenity.GetById(rentalAmenity.AmenityId));
             }
+
+            // now for Photo
+            objPhotoList = _unitOfWork.Photo.GetAll().Where(x => x.RentalId == id).ToList();
+
+            objDiscountList = _unitOfWork.Discount.GetAll().ToList().Where(x => x.RentalId == id).ToList();
+
             return Page();
+
+
         }
 
     }
