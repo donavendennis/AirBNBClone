@@ -11,6 +11,9 @@ namespace Infrastructure.Models
         public string Title { get; set; }
 
         [Required]
+        public string Country { get; set; }
+
+        [Required]
         public string State { get; set; }
 
         [Required]
@@ -27,6 +30,12 @@ namespace Infrastructure.Models
 
         [Required]
         public string OwnerId { get; set; }
+
+        [Required]
+        public int Beds { get; set; }
+        [Required]
+        public int Baths { get; set; }
+
 
         [ForeignKey("OwnerId")]
         public ApplicationUser? ApplicationUser { get; set; }
