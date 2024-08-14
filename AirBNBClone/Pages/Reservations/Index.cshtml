@@ -1,0 +1,194 @@
+﻿@page
+@model AirBNBClone.Pages.Reservations.IndexModel
+@{
+}
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h2>Reservation</h2>
+            <p class="lead">When would you like to reserve for?</p>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-md-5 col-lg-4 order-md-last">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-primary">Reservation expenses</span>
+                </h4>
+                <ul class="list-group">
+                    <!--Loop for any fees related to RENTALS and FEES relation-->
+                    <!--ICEBOX OPTION:Change to text muted if there are no Fees related to the house-->
+                    <li class="list-group-item d-flex justify-content-between lh-sm border-bottom-0">
+                        <div>
+                            <h6 class="my-0">Rental Fees:</h6>
+                            <small class="text-body-secondary">INSERT FEE NAME OBJ</small>
+                        </div>
+                        <span class="text-muted">INSRT FEE PRICE OBJ</span>
+                    </li>
+                    <!--end loop-->
+                    <!---->
+                    <li class="list-group-item d-flex justify-content-between lh-sm border-bottom-0">
+                        <div>
+                            <h6 class="my-0">Rental Price:</h6>
+                            <small class="text-muted">Prices my vary by time</small>
+                        </div>
+                        <span class="text-muted">INSRT RENTAL PRICE OBJ</span>
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-between p-3 border border-2 bg-light rounded-bottom">
+                    <strong>Total (USD)</strong>
+                    <strong>INSERT TOTAL PRICE OBJ</strong>
+                </div>
+                <div class="container">
+                </div>
+            </div>
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Rental Information</h4>
+                <form class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <h5>When are you staying?</h5>
+                        <div class="d-flex justify-content-center">
+                            <div class="col-sm-6">
+                                <div class="col-auto mx-1">
+                                    <input asp-for="StartDate" type="date" class="form-control mb-2" name="StartDate" placeholder="Start Date" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-auto mx-1">
+                                    <input asp-for="EndDate" type="date" class="form-control mb-2" name="EndDate" placeholder="End Date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="username" class="form-label">First Name</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"></span>
+                                <input type="text" class="form-control" id="firstname" placeholder="Firstname" required>
+                                <div class="invalid-feedback">
+                                    Your Firstname is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="username" class="form-label">Last Name</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"></span>
+                                <input type="text" class="form-control" id="Lastname" placeholder="Lasttname" required>
+                                <div class="invalid-feedback">
+                                    Your Lastname is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="country" class="form-label">Country</label>
+                            <select class="form-select" id="country" required>
+                                <option value="">Choose...</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid country.
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <label for="address" class="form-label">State</label>
+                            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="zip" class="form-label">Zip</label>
+                            <input type="text" class="form-control" id="zip" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Zip code required.
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    $(document).ready(function () {
+        // Fetch countries
+        $.ajax({
+            url: 'https://restcountries.com/v3.1/all', // REST Countries API
+            method: 'GET',
+            success: function (data) {
+                var countrySelect = $('#country');
+                var countries = data.map(function (country) {
+                    return { name: country.name.common, code: country.cca2 };
+                });
+
+                // Sort countries alphabetically
+                countries.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });
+
+                countries.forEach(function (country) {
+                    countrySelect.append(new Option(country.name, country.code));
+                });
+            },
+            error: function (error) {
+                console.error('Error fetching countries:', error);
+            }
+        });
+
+        // Fetch states when a country is selected
+        $('#country').change(function () {
+            var countryCode = $(this).val();
+            console.log('Selected country code:', countryCode); // Log selected country code
+            if (countryCode) {
+                $.ajax({
+                    url: `http://api.geonames.org/searchJSON?country=${countryCode}&featureCode=ADM1&username=TannerC97`, // Geonames API (replace 'TannerC97' with your username)
+                    method: 'GET',
+                    success: function (data) {
+                        console.log('States data:', data); // Log the states data
+                        var stateSelect = $('#state');
+                        var states = data.geonames.map(function (state) {
+                            return { name: state.name, code: state.adminCode1 };
+                        });
+
+                        // Sort states alphabetically
+                        states.sort(function (a, b) {
+                            return a.name.localeCompare(b.name);
+                        });
+
+                        stateSelect.empty().append(new Option('Choose...', ''));
+                        states.forEach(function (state) {
+                            stateSelect.append(new Option(state.name, state.code));
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error fetching states:', error);
+                    }
+                });
+            } else {
+                $('#state').empty().append(new Option('Choose...', ''));
+            }
+        });
+    });
+</script>
+
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="checkout.js"></script>

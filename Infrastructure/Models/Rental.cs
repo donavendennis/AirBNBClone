@@ -34,7 +34,7 @@ namespace Infrastructure.Models
         [Required]
         public int Beds { get; set; }
         [Required]
-        public int Baths { get; set; }
+        public int Baths { get; set; } 
 
 
         [ForeignKey("OwnerId")]
