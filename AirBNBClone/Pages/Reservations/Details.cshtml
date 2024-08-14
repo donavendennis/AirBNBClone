@@ -1,12 +1,12 @@
 ﻿@page
-@model AirBNBClone.Pages.Reservations.IndexModel
+@model AirBNBClone.Pages.Reservations.DetailsModel
 @{
 }
 <div class="container">
     <main>
         <div class="py-5 text-center">
             <h2>Reservation</h2>
-            <p class="lead">When would you like to reserve for?</p>
+            <p class="lead">What are your booking details?</p>
         </div>
 
         <div class="row g-5">
@@ -17,13 +17,19 @@
                 <ul class="list-group">
                     <!--Loop for any fees related to RENTALS and FEES relation-->
                     <!--ICEBOX OPTION:Change to text muted if there are no Fees related to the house-->
-                    <li class="list-group-item d-flex justify-content-between lh-sm border-bottom-0">
-                        <div>
-                            <h6 class="my-0">Rental Fees:</h6>
-                            <small class="text-body-secondary">INSERT FEE NAME OBJ</small>
-                        </div>
-                        <span class="text-muted">INSRT FEE PRICE OBJ</span>
-                    </li>
+                    @foreach (var (obj, amount) in Model.objFeeList.Zip(Model.objFeeAmountList, (a, b) => (a, b)))
+                    {
+
+
+                        <li class="list-group-item d-flex justify-content-between lh-sm border-bottom-0">
+                            <div>
+                                <h6 class="my-0">@obj.Name:</h6>
+                                <small class="text-body-secondary">@obj.Description</small>
+                            </div>
+                            <span class="text-muted">@amount</span>
+                        </li>
+
+                        }
                     <!--end loop-->
                     <!---->
                     <li class="list-group-item d-flex justify-content-between lh-sm border-bottom-0">
@@ -31,38 +37,46 @@
                             <h6 class="my-0">Rental Price:</h6>
                             <small class="text-muted">Prices my vary by time</small>
                         </div>
-                        <span class="text-muted">INSRT RENTAL PRICE OBJ</span>
+                        <span class="text-muted">@Model.PriceSum</span>
                     </li>
                 </ul>
                 <div class="d-flex justify-content-between p-3 border border-2 bg-light rounded-bottom">
                     <strong>Total (USD)</strong>
-                    <strong>INSERT TOTAL PRICE OBJ</strong>
+                    <strong>@Model.totalCost</strong>
                 </div>
                 <div class="container">
                 </div>
             </div>
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Rental Information</h4>
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" novalidate method="post">
                     <div class="row g-3">
                         <h5>When are you staying?</h5>
                         <div class="d-flex justify-content-center">
                             <div class="col-sm-6">
                                 <div class="col-auto mx-1">
-                                    <input asp-for="StartDate" type="date" class="form-control mb-2" name="StartDate" placeholder="Start Date" />
+                                    <input disabled asp-for="prefillStartDate" type="date" class="form-control mb-2" name="StartDate" placeholder="Start Date" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="col-auto mx-1">
-                                    <input asp-for="EndDate" type="date" class="form-control mb-2" name="EndDate" placeholder="End Date" />
+                                    <input disabled asp-for="prefillEndDate" type="date" class="form-control mb-2" name="EndDate" placeholder="End Date" />
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <p>@Model.PriceSumFormula</p>
+                        </div>
+                        <!--Button "EditDate" navigates back-->
+
+                        <a class="w-100 btn btn-primary btn-lg" asp-page="/Reservations/DateSelector" asp-route-id="@Model.Id" class="btn btn-primary mb-2">Edit Date</a>
+
+                        <br />
                         <div class="col-6">
                             <label for="username" class="form-label">First Name</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text"></span>
-                                <input type="text" class="form-control" id="firstname" placeholder="Firstname" required>
+                                <input asp-for="FirstName" type="text" class="form-control" id="firstname" placeholder="Firstname" value="" required>
                                 <div class="invalid-feedback">
                                     Your Firstname is required.
                                 </div>
@@ -72,7 +86,7 @@
                             <label for="username" class="form-label">Last Name</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text"></span>
-                                <input type="text" class="form-control" id="Lastname" placeholder="Lasttname" required>
+                                <input asp-for="LastName" type="text" class="form-control" id="Lastname" placeholder="Lasttname" value="" required>
                                 <div class="invalid-feedback">
                                     Your Lastname is required.
                                 </div>
@@ -81,7 +95,7 @@
 
                         <div class="col-12">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                            <input asp-for="Email" type="email" class="form-control" id="email" placeholder="you@example.com">
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -89,7 +103,7 @@
 
                         <div class="col-12">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                            <input asp-for="Address" type="text" class="form-control" id="address" placeholder="1234 Main St" required>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>
@@ -106,16 +120,16 @@
                         </div>
 
                         <div class="col-4">
-                            <label for="address" class="form-label">State</label>
-                            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                            <label for="state" class="form-label">State</label>
+                            <input asp-for="State" type="text" class="form-control" id="state" placeholder="State" required>
                             <div class="invalid-feedback">
-                                Please enter your shipping address.
+                                Please enter your shipping state.
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <label for="zip" class="form-label">Zip</label>
-                            <input type="text" class="form-control" id="zip" placeholder="" required>
+                            <input asp-for="Zip" type="text" class="form-control" id="zip" placeholder="" required>
                             <div class="invalid-feedback">
                                 Zip code required.
                             </div>
