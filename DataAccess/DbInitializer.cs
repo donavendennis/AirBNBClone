@@ -45,6 +45,7 @@ namespace DataAccess.DbInitializer
             }
             else
             {
+                var DateOnly_Today = DateOnly.FromDateTime(DateTime.Now);
                 //create roles if they are not created
                 //SD is a “Static Details” class we will create in Utility to hold constant strings for Roles
 
@@ -203,20 +204,13 @@ namespace DataAccess.DbInitializer
 
                 // Price
 
-                /*Id: An integer property representing a unique identifier.
-RentalId: An integer property representing the identifier of a related rental entity.
-Start: A DateTime property representing the start date and time of a rental period.
-End: A DateTime property representing the end date and time of a rental period.
-Amount: An integer property representing the amount associated with the rental.
-Priority: An integer property representing the priority of the rental.
-Rental: A nullable Rental object property that is linked to the RentalId field using the ForeignKey attribute.*/
-
+                
                 var Prices = new List<Price>
                 {
-                    new Price { RentalId = 1, Start = DateTime.Today.AddDays(-10), End = DateTime.Today.AddDays(100), Amount = 300, Priority = 1 },
-                    new Price { RentalId = 1, Start = DateTime.Today.AddDays(20), End = DateTime.Today.AddDays(40), Amount = 250, Priority = 2 },
-                    new Price { RentalId = 1, Start = DateTime.Today.AddDays(25), End = DateTime.Today.AddDays(35), Amount = 200, Priority = 3 },
-                    new Price { RentalId = 2, Start = DateTime.Today, End = DateTime.Today.AddDays(100), Amount = 100, Priority = 1 }
+                    new Price { RentalId = 1, Start = DateOnly_Today.AddDays(-10), End = DateOnly_Today.AddDays(100), Amount = 300, Priority = 1 },
+                    new Price { RentalId = 1, Start = DateOnly_Today.AddDays(20), End = DateOnly_Today.AddDays(40), Amount = 250, Priority = 2 },
+                    new Price { RentalId = 1, Start = DateOnly_Today.AddDays(25), End = DateOnly_Today.AddDays(35), Amount = 200, Priority = 3 },
+                    new Price { RentalId = 2, Start = DateOnly_Today, End = DateOnly_Today.AddDays(100), Amount = 100, Priority = 1 }
                 };
 
                 foreach (var p in Prices)
@@ -253,18 +247,11 @@ Rental: A nullable Rental object property that is linked to the RentalId field u
 
                 // reservations
 
-                /*Id: An integer primary key.
-                UserId: A required integer that represents the user who made the reservation.
-                RentalId: A required integer that represents the rental associated with the reservation.
-                Start: A required DateTime that represents the start date and time of the reservation.
-                End: A required DateTime that represents the end date and time of the reservation.
-                Confirm: A required boolean that indicates whether the reservation has been confirmed.
-                Rental: A navigation property that represents the related Rental object, with a foreign key to RentalId.*/
-
+               
                 var Reservations = new List<Reservation>
                 {
-                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateTime.Today.AddDays(5), End = DateTime.Today.AddDays(10), Confirm = true },
-                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateTime.Today.AddDays(15), End = DateTime.Today.AddDays(15), Confirm = false },
+                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(5), End = DateOnly_Today.AddDays(10), Confirm = true },
+                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(15), End = DateOnly_Today.AddDays(15), Confirm = false },
                 };
 
                 foreach (var r in Reservations)

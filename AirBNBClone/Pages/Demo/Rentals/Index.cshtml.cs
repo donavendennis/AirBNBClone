@@ -2,6 +2,7 @@ using DataAccess;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AirBNBClone.Pages.Demo.Rentals
 {
@@ -20,7 +21,7 @@ namespace AirBNBClone.Pages.Demo.Rentals
             objPhotoList = new List<Photo>();
             objDiscountList = new List<Discount>();
             objAvailabilityStringList = new List<String>();
-            objAvailabilityDateTimeList = new List<DateTime>();
+            objAvailabilityDateList = new List<DateOnly>();
         }
 
         public Rental objRental;
@@ -35,12 +36,28 @@ namespace AirBNBClone.Pages.Demo.Rentals
         public List<Discount> objDiscountList;
 
         public List<String> objAvailabilityStringList;
-        public List<DateTime> objAvailabilityDateTimeList;
+        public List<DateOnly> objAvailabilityDateList;
 
-        public IActionResult OnGet(int id)
+        public int PriceSum;
+        public String PriceSumFormula;
+
+        public bool havePriceInfo = false;
+
+        // for submission of start and end for price calculation
+        [BindProperty]
+        public int Id { get; set; }
+        public DateOnly? QueryStart { get; set; }
+
+        public DateOnly? QueryEnd { get; set; }
+
+        public int Id_ReEnter { get; set; }
+        
+
+        public IActionResult OnGet(int Id, DateOnly? QueryStart, DateOnly? QueryEnd)
         {
-            objRental = _unitOfWork.Rental.GetById(id);
-            objFeeRentalList = _unitOfWork.FeeRental.GetAll().Where(x => x.RentalId == id).ToList();
+            Id_ReEnter = Id;
+            objRental = _unitOfWork.Rental.GetById(Id);
+            objFeeRentalList = _unitOfWork.FeeRental.GetAll().Where(x => x.RentalId == Id).ToList();
             // go through the filteres FeeRental and get the Fee for each one, putting it in objFeeList
             foreach (var feeRental in objFeeRentalList)
             {
@@ -48,7 +65,7 @@ namespace AirBNBClone.Pages.Demo.Rentals
                 objFeeAmountList.Add(feeRental.Amount);
             }
 
-            objRentalAmenityList = _unitOfWork.RentalAmenity.GetAll().Where(x => x.RentalId == id).ToList();
+            objRentalAmenityList = _unitOfWork.RentalAmenity.GetAll().Where(x => x.RentalId == Id).ToList();
             // go through the filteres RentalAmenity and get the Amenity for each one, putting it in objAmenityList
             foreach (var rentalAmenity in objRentalAmenityList)
             {
@@ -56,24 +73,24 @@ namespace AirBNBClone.Pages.Demo.Rentals
             }
 
             // now for Photo
-            objPhotoList = _unitOfWork.Photo.GetAll().Where(x => x.RentalId == id).ToList();
+            objPhotoList = _unitOfWork.Photo.GetAll().Where(x => x.RentalId == Id).ToList();
 
-            objDiscountList = _unitOfWork.Discount.GetAll().ToList().Where(x => x.RentalId == id).ToList();
+            objDiscountList = _unitOfWork.Discount.GetAll().ToList().Where(x => x.RentalId == Id).ToList();
 
             //iterate from today to 30 days from now
 
             // get the current date
-            DateTime currentDate = DateTime.Today;
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
 
             for (int i = 0; i < 30; i++)
             {
                 // get the current date plus i days
-                DateTime futureDate = currentDate.AddDays(i);
+                DateOnly futureDate = currentDate.AddDays(i);
 
-                objAvailabilityDateTimeList.Add(futureDate);
+                objAvailabilityDateList.Add(futureDate);
 
                 // check if the future date is in the reservation list
-                var objReservation = _unitOfWork.Reservation.GetAll().Where(x => x.RentalId == id && x.Start <= futureDate && x.End >= futureDate).FirstOrDefault();
+                var objReservation = _unitOfWork.Reservation.GetAll().Where(x => x.RentalId == Id && x.Start <= futureDate && x.End >= futureDate).FirstOrDefault();
 
                 // if it is, then we need to remove it from the list of available dates
                 if (objReservation is not null)
@@ -94,7 +111,7 @@ namespace AirBNBClone.Pages.Demo.Rentals
                 else
                 {
                     // get all prices which is belonging to this day with the highest Priority
-                    var objPrice = _unitOfWork.Price.GetAll().Where(x => x.RentalId == id && x.Start <= futureDate && x.End >= futureDate).OrderByDescending(x => x.Priority).FirstOrDefault();
+                    var objPrice = _unitOfWork.Price.GetAll().Where(x => x.RentalId == Id && x.Start <= futureDate && x.End >= futureDate).OrderByDescending(x => x.Priority).FirstOrDefault();
                     if (objPrice is not null)
                     {
                         // add string Available to the list
@@ -108,8 +125,50 @@ namespace AirBNBClone.Pages.Demo.Rentals
 
                 }
             }
+            // print QueryStart and QueryEnd to the debug console as text
+            Console.WriteLine("QueryStart: " + QueryStart);
+            Console.WriteLine("QueryEnd: " + QueryEnd);
 
+            PriceSumFormula = QueryStart + " to " + QueryEnd + ": ";
 
+            if (QueryStart is not null && QueryEnd is not null && QueryStart <= QueryEnd)
+            {
+                havePriceInfo = true;
+
+                // go through each day from start to end, then get the price for that day
+                var checkingDay = QueryStart;
+
+                while (checkingDay <= QueryEnd)
+                {
+                    // first get if there are any reservations
+                    var objReservation = _unitOfWork.Reservation.GetAll().Where(x => x.RentalId == Id && x.Start <= checkingDay && x.End >= checkingDay).FirstOrDefault();
+                    if (objReservation is not null)
+                    {
+                        // add 0 to the list
+                        PriceSum = -871;
+                        PriceSumFormula = "Cannot Book! Already Booked on Day " + checkingDay;
+                        break;
+                    }
+                    // get the price of the day by going through all the prices that start before and end after the checking day, then getting the one with the highest priority
+                    var objPrice = _unitOfWork.Price.GetAll().Where(x => x.RentalId == Id && x.Start <= checkingDay && x.End >= checkingDay).OrderByDescending(x => x.Priority).FirstOrDefault();
+                    if (objPrice is not null)
+                    {
+                        // add the price to the list
+                        PriceSum += objPrice.Amount;
+                        PriceSumFormula += objPrice.Amount + " + ";
+                    }
+                    else
+                    {
+                        // add 0 to the list
+                        PriceSum = -871;
+                        PriceSumFormula = "Cannot Book! No Price On Day " + checkingDay;
+                        break;
+                    }
+
+                    checkingDay = checkingDay.Value.AddDays(1);
+                }
+            }
+            else { havePriceInfo = false; }
 
             return Page();
 

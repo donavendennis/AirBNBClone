@@ -4,9 +4,5 @@
 }
 @foreach (var obj in Model.objFeeList)
 {
-    <div>
-        <h3>@obj.Name</h3>
-        <p>@obj.Description</p>
-        <p>@obj.Id</p>
-    </div>
+    <p><b>@obj.Name</b> Fee (ID <b>@obj.Id</b>) is charged: <b>@obj.Description</b>.</p>
 }
