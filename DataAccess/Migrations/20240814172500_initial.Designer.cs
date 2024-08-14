@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240814115249_initial")]
+    [Migration("20240814172500_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -124,6 +124,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("ImageType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PrimaryImage")
+                        .HasColumnType("bit");
 
                     b.Property<int>("RentalId")
                         .HasColumnType("int");

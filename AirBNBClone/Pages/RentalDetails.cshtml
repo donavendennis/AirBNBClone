@@ -5,34 +5,51 @@
 <!-- Link to the custom CSS file -->
 <link rel="stylesheet" href="~/css/RentalDetails.css">
 
-<div class="container-fluid px-5 py-3 border custom-container center-content">
-    <div class="row flex-lg-row-reverse align-items-center g-3 py-3">
-        <div class="col-12 col-lg-7">
-            <img src="~/images/democlone.jpg" class="d-block mx-lg-auto img-fluid rounded-image" alt="Bootstrap Themes" width="800" height="600" loading="lazy">
-        </div>
-        <div class="col-12 col-lg-5">
-            <h3 class="display-6 fw-bold text-body-emphasis lh-1 mb-3">INSERT TITLE OBJ</h3>
-            <div class="mb-3">
-                <p><strong>State:</strong> INSERT STATE OBJ</p>
-                <p><strong>City:</strong> INSERT CITY OBJ</p>
-                <p><strong>Address:</strong> INSERT ADDRESS OBJ</p>
-                <p><strong>Zip:</strong> INSERT ZIP OBJ</p>
-                <p><strong>Owner:</strong> INSERT OWNER ID RELATION TO NAME OBJ</p>
-                <p><strong>Phone:</strong> INSERT PHONE OBJ</p>
+
+<!--Only display if Model.objRental is not null-->
+@if (Model.objRental is not null)
+{
+
+    <div class="container-fluid px-5 py-3 border custom-container center-content">
+        <div class="row flex-lg-row-reverse align-items-center g-3 py-3">
+            <div class="col-12 col-lg-7">
+                <img src="/Images/?id=@Model.objMainPhotoId" class="d-block mx-lg-auto img-fluid rounded-image" alt="Bootstrap Themes" width="800" height="600" loading="lazy">
             </div>
-            <div class="text-muted">
-                <p><strong>Amenities:</strong></p>
-                <ul class="amenities-list">
-                    @* Loop through amenities here, the should just auto populate when the relation from rental to amenities is created *@
-                    <li>AMENITIES</li>
-                    <li>AMENITIES</li>
-                    <li>AMENITIES</li>
-                </ul>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a href="/Reservations" class="btn btn-primary btn px-4 me-md-2">Book</a> <!--This will link to the reservations page to then be submitted as a new reservation-->
-                <a href="/Search" class="btn btn-outline-secondary btn px-4">Go Back</a> <!--This will need to go back to search from 'RentalID'-->
+            <div class="col-12 col-lg-5">
+                <h3 class="display-6 fw-bold text-body-emphasis lh-1 mb-3">@Model.objRental.Title</h3>
+                <p>Database ID: @Model.objRental.Id</p>
+                <div class="mb-3">
+                    <p><strong>State:</strong> @Model.objRental.State</p>
+                    <p><strong>City:</strong> @Model.objRental.City</p>
+                    <p><strong>Address:</strong> @Model.objRental.Address</p>
+                    <p><strong>Zip:</strong> @Model.objRental.Zip</p>
+                    <p><strong>Owner:</strong> @Model.objRental.OwnerId</p>
+                    <p><strong>Phone:</strong> @Model.objRental.Phone</p>
+                </div>
+                <div class="text-muted">
+                    <p><strong>Amenities:</strong></p>
+                    <ul class="amenities-list">
+                        @foreach (var obj in Model.objAmenityList)
+                        {
+                            <li>@obj.Name</li>
+                        }
+                    </ul>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="/Reservations" class="btn btn-primary btn px-4 me-md-2">Book</a> <!--This will link to the reservations page to then be submitted as a new reservation-->
+                    <a href="/Search" class="btn btn-outline-secondary btn px-4">Go Back</a> <!--This will need to go back to search from 'RentalID'-->
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+}
+else
+{
+    <h1>No rental found</h1>
+    <form method="get">
+        <input asp-for="Id" type="number" value="@Model.Id" />
+    </form>
+    <!--Button back to index-->
+    <a href="/Search" class="btn btn-outline-secondary btn px-4">Go Back</a>
+}

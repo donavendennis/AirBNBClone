@@ -8,6 +8,7 @@ namespace AirBNBClone.Pages.Demo.Rentals
 {
     public class IndexModel : PageModel
     {
+        // slight reminder: check the new rental details page for the same code which may be possibly better. This page is going to disappear soon!
         private readonly UnitOfWork _unitOfWork;
 
         public IndexModel(UnitOfWork unitOfWork)
