@@ -16,6 +16,9 @@ namespace Infrastructure.Models
         [Required]
         public byte[]? ImageData { get; set; }
 
+        [Required]
+        public bool PrimaryImage { get; set; }
+
 
         [Required]
         public string ImageType { get; set; }

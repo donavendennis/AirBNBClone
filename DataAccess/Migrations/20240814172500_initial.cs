@@ -273,6 +273,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RentalId = table.Column<int>(type: "int", nullable: false),
                     ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PrimaryImage = table.Column<bool>(type: "bit", nullable: false),
                     ImageType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

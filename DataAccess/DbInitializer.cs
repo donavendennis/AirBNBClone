@@ -61,7 +61,7 @@ namespace DataAccess.DbInitializer
                     Email = "superadmin@test.com",
                     FirstName = "Super",
                     LastName = "Admin",
-                    PhoneNumber = "8015556919",
+                    PhoneNumber = "18015556919",
                     StreetAddress = "123 Main Street",
                     State = "UT",
                     PostalCode = "84408",
@@ -77,7 +77,7 @@ namespace DataAccess.DbInitializer
                     Email = "renter@test.com",
                     FirstName = "Renter",
                     LastName = "Renter",
-                    PhoneNumber = "8015556919",
+                    PhoneNumber = "18015556919",
                     StreetAddress = "123 Main Street",
                     State = "UT",
                     PostalCode = "84408",
@@ -228,15 +228,41 @@ namespace DataAccess.DbInitializer
                 Rental: This is a public property of type Rental that is marked with the [ForeignKey("RentalId")] attribute. This indicates that this property represents the navigation property for the foreign key relationship defined by the RentalId property, likely allowing access to the related Rental entity.*/
 
 
-                byte[] bytes = System.Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==");
+                byte[] bytes_emptyphoto = System.Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==");
 
-                // Bytes are 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 00 01 00 00 00 01 01 00 00 00 00 37 6e f9 24 00 00 00 0a 49 44 41 54 78 01 63 60 00 00 00 02 00 01 73 75 01 18 00 00 00 00 49 45 4e 44 ae 42 60 82
+                // image file names are cheap_house.png, posh_house.png
+                // a list of the above
+                var imageFiles = new List<string>
+                {
+                    "cheap_house.png",
+                    "posh_house.png"
+                };
+
+                // dictionary, key string, value bytes
+                var imageBytes = new Dictionary<string, byte[]>();
+
+                // for each image in the image file, read the file and convert to byte array
+                foreach (var imageFile in imageFiles)
+                {
+                    // the images are stored in the wwwroot/images/preset folder
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/preset", imageFile);
+                    bytes_emptyphoto = System.IO.File.ReadAllBytes(path);
+                    // then put the bytes in a dictionary with the key being the image file name
+                    imageBytes.Add(imageFile, bytes_emptyphoto);
+
+                }
+
                 var Photos = new List<Photo>
                 {
-                    new Photo { RentalId = 1, ImageData = bytes, ImageType = "image/jpeg" },
-                    new Photo { RentalId = 1, ImageData = bytes, ImageType = "image/jpeg" },
-                    new Photo { RentalId = 1, ImageData = bytes, ImageType = "image/jpeg" },
-                    new Photo { RentalId = 2, ImageData = bytes, ImageType = "image/jpeg" }
+                    new Photo { RentalId = 1, ImageData = bytes_emptyphoto, ImageType = "image/png", PrimaryImage = false},
+                    new Photo { RentalId = 1, ImageData = bytes_emptyphoto, ImageType = "image/png", PrimaryImage = false },
+                    new Photo { RentalId = 1, ImageData = bytes_emptyphoto, ImageType = "image/png", PrimaryImage = false },
+                    new Photo { RentalId = 2, ImageData = bytes_emptyphoto, ImageType = "image/png", PrimaryImage = false },
+
+                    // make the posh house with the posh image
+                    new Photo { RentalId = 1, ImageData = imageBytes["posh_house.png"], ImageType = "image/png", PrimaryImage = true},
+                    // now the cheap house with the cheap image
+                    new Photo { RentalId = 2, ImageData = imageBytes["cheap_house.png"], ImageType = "image/png", PrimaryImage = true }
                 };
 
                 foreach (var p in Photos)
