@@ -69,6 +69,22 @@ namespace DataAccess.DbInitializer
                     Id = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4"
                 }, "Admin123*").GetAwaiter().GetResult();
 
+                // make a renter
+                _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "renter@test.com",
+                    Email = "renter@test.com",
+                    FirstName = "Renter",
+                    LastName = "Renter",
+                    PhoneNumber = "8015556919",
+                    StreetAddress = "123 Main Street",
+                    State = "UT",
+                    PostalCode = "84408",
+                    City = "Ogden",
+                    EmailConfirmed = true,
+                    Id = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5"
+                }, "Renter123*").GetAwaiter().GetResult();
+
                 //ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "superadmin@test.com");
 
                 //_userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
@@ -99,8 +115,8 @@ namespace DataAccess.DbInitializer
     OwnerId: A string property representing the owner's identifier.*/
                 var Rentals = new List<Rental>
                 {
-                    new Rental { Title = "My Test House (posh)", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4" },
-                    new Rental { Title = "My Test House (cheap)", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4" },
+                    new Rental { Title = "My Test House (posh)", Beds = 5, Baths = 5, Country = "PoshCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4" },
+                    new Rental { Title = "My Test House (cheap)", Beds = 1, Baths = 1, Country = "CheapCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4" },
 
                 };
 
@@ -197,10 +213,10 @@ Rental: A nullable Rental object property that is linked to the RentalId field u
 
                 var Prices = new List<Price>
                 {
-                    new Price { RentalId = 1, Start = DateTime.Now, End = DateTime.Now.AddDays(100), Amount = 300, Priority = 1 },
-                    new Price { RentalId = 1, Start = DateTime.Now.AddDays(20), End = DateTime.Now.AddDays(40), Amount = 250, Priority = 2 },
-                    new Price { RentalId = 1, Start = DateTime.Now.AddDays(25), End = DateTime.Now.AddDays(35), Amount = 200, Priority = 3 },
-                    new Price { RentalId = 2, Start = DateTime.Now, End = DateTime.Now.AddDays(100), Amount = 100, Priority = 1 }
+                    new Price { RentalId = 1, Start = DateTime.Today.AddDays(-10), End = DateTime.Today.AddDays(100), Amount = 300, Priority = 1 },
+                    new Price { RentalId = 1, Start = DateTime.Today.AddDays(20), End = DateTime.Today.AddDays(40), Amount = 250, Priority = 2 },
+                    new Price { RentalId = 1, Start = DateTime.Today.AddDays(25), End = DateTime.Today.AddDays(35), Amount = 200, Priority = 3 },
+                    new Price { RentalId = 2, Start = DateTime.Today, End = DateTime.Today.AddDays(100), Amount = 100, Priority = 1 }
                 };
 
                 foreach (var p in Prices)
@@ -235,7 +251,29 @@ Rental: A nullable Rental object property that is linked to the RentalId field u
                 }
                 _db.SaveChanges();
 
+                // reservations
+
+                /*Id: An integer primary key.
+                UserId: A required integer that represents the user who made the reservation.
+                RentalId: A required integer that represents the rental associated with the reservation.
+                Start: A required DateTime that represents the start date and time of the reservation.
+                End: A required DateTime that represents the end date and time of the reservation.
+                Confirm: A required boolean that indicates whether the reservation has been confirmed.
+                Rental: A navigation property that represents the related Rental object, with a foreign key to RentalId.*/
+
+                var Reservations = new List<Reservation>
+                {
+                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateTime.Today.AddDays(5), End = DateTime.Today.AddDays(10), Confirm = true },
+                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateTime.Today.AddDays(15), End = DateTime.Today.AddDays(15), Confirm = false },
+                };
+
+                foreach (var r in Reservations)
+                {
+                    _db.Reservations.Add(r);
+                }
+                _db.SaveChanges();
             }
+
         }
     }
 }

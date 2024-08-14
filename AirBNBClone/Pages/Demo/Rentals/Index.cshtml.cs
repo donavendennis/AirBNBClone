@@ -19,6 +19,8 @@ namespace AirBNBClone.Pages.Demo.Rentals
             objRentalAmenityList = new List<RentalAmenity>();
             objPhotoList = new List<Photo>();
             objDiscountList = new List<Discount>();
+            objAvailabilityStringList = new List<String>();
+            objAvailabilityDateTimeList = new List<DateTime>();
         }
 
         public Rental objRental;
@@ -31,6 +33,10 @@ namespace AirBNBClone.Pages.Demo.Rentals
         public List<Photo> objPhotoList;
 
         public List<Discount> objDiscountList;
+
+        public List<String> objAvailabilityStringList;
+        public List<DateTime> objAvailabilityDateTimeList;
+
         public IActionResult OnGet(int id)
         {
             objRental = _unitOfWork.Rental.GetById(id);
@@ -53,6 +59,57 @@ namespace AirBNBClone.Pages.Demo.Rentals
             objPhotoList = _unitOfWork.Photo.GetAll().Where(x => x.RentalId == id).ToList();
 
             objDiscountList = _unitOfWork.Discount.GetAll().ToList().Where(x => x.RentalId == id).ToList();
+
+            //iterate from today to 30 days from now
+
+            // get the current date
+            DateTime currentDate = DateTime.Today;
+
+            for (int i = 0; i < 30; i++)
+            {
+                // get the current date plus i days
+                DateTime futureDate = currentDate.AddDays(i);
+
+                objAvailabilityDateTimeList.Add(futureDate);
+
+                // check if the future date is in the reservation list
+                var objReservation = _unitOfWork.Reservation.GetAll().Where(x => x.RentalId == id && x.Start <= futureDate && x.End >= futureDate).FirstOrDefault();
+
+                // if it is, then we need to remove it from the list of available dates
+                if (objReservation is not null)
+                {
+                    // check if the reservation is confirmed
+                    if (objReservation.Confirm)
+                    {
+                        // add string Unavailable to the list
+                        objAvailabilityStringList.Add("Already booked and confirmed");
+                    }
+                    else
+                    {
+                        // add string Available to the list
+                        objAvailabilityStringList.Add("Booking in progress, awaiting confirmation");
+
+                    }
+                }
+                else
+                {
+                    // get all prices which is belonging to this day with the highest Priority
+                    var objPrice = _unitOfWork.Price.GetAll().Where(x => x.RentalId == id && x.Start <= futureDate && x.End >= futureDate).OrderByDescending(x => x.Priority).FirstOrDefault();
+                    if (objPrice is not null)
+                    {
+                        // add string Available to the list
+                        objAvailabilityStringList.Add("Available at a price of " + objPrice.Amount);
+                    }
+                    else
+                    {
+                        // add string Available to the list
+                        objAvailabilityStringList.Add("Price TBD by owner");
+                    }
+
+                }
+            }
+
+
 
             return Page();
 

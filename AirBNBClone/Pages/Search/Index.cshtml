@@ -1,28 +1,28 @@
 ﻿@page
-@model IndexModel
+@model AirBNBClone.Pages.Search.IndexModel
 @{
     ViewData["Title"] = "Search";
 }
 
 <h2>Search</h2>
 
-<form method="post" class="form-inline">
+<form method="get" class="form-inline">
     <div class="form-row d-flex align-items-center justify-content-start flex-wrap w-100">
         <!-- First Row -->
         <div class="col-auto mx-1">
-            <input type="text" class="form-control mb-2" name="Country" placeholder="Country" />
+            <input asp-for="Country" type="text" class="form-control mb-2" name="Country" placeholder="Country" />
         </div>
         <div class="col-auto mx-1">
-            <input type="text" class="form-control mb-2" name="City" placeholder="City" />
+            <input asp-for="City" type="text" class="form-control mb-2" name="City" placeholder="City" />
         </div>
         <div class="col-auto mx-1">
-            <input type="date" class="form-control mb-2" name="StartDate" placeholder="Start Date" />
+            <input asp-for="StartDate" type="date" class="form-control mb-2" name="StartDate" placeholder="Start Date" />
         </div>
         <div class="col-auto mx-1">
-            <input type="date" class="form-control mb-2" name="EndDate" placeholder="End Date" />
+            <input asp-for="EndDate" type="date" class="form-control mb-2" name="EndDate" placeholder="End Date" />
         </div>
         <div class="col-auto mx-1">
-            <select class="form-control mb-2" name="Beds">
+            <select asp-for="Beds" class="form-control mb-2" name="Beds">
                 <option value="">Beds</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -32,7 +32,7 @@
             </select>
         </div>
         <div class="col-auto mx-1">
-            <select class="form-control mb-2" name="Baths">
+            <select asp-for="Baths" class="form-control mb-2" name="Baths">
                 <option value="">Baths</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -41,9 +41,12 @@
                 <option value="5">5</option>
             </select>
         </div>
+        <div class="col-auto mx-1">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
     </div>
-    <div class="form-row d-flex align-items-center justify-content-start flex-wrap w-100">
-        <!-- Second Row (Amenities) -->
+    <!--<div class="form-row d-flex align-items-center justify-content-start flex-wrap w-100">
+        
         <div class="col-auto mx-1">
             <select class="form-control mb-2" name="Amenities">
                 <option value="">Extra amenities</option>
@@ -107,25 +110,33 @@
         <div class="col-auto mx-1">
             <button type="submit" class="btn btn-primary mb-2">Search</button>
         </div>
-    </div>
+    </div>-->
 </form>
 
 <div class="row" data-masonry='{"percentPosition": true }'>
-<div class="col-sm-6 col-lg-4 mb-4">
-        <div class="card">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96" /><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
-            <div class="card-body">
-                <h5 class="card-title">INSERT RENTAL TITLE HERE</h5>
-                <div class="card-text ">
-                    <strong>State:</strong><p>INSERT STATE HERE</p>
-                    <strong>Zip:</strong><p>INSERT ZIP HERE</p>
-                    <strong>City:</strong><p>INSERT CITY HERE</p>
-                    <strong>Address:</strong><p>INSERT ADDRESS HERE</p>
-                    <strong>Owner:</strong><p>INSERT OWNER ID NAME HERE</p>
-                    <strong>Phone:</strong><p>INSERT PHONE HERE</p>
+    @foreach (var obj in Model.objRentalList)
+    {
+        <div class="col-sm-6 col-lg-4 mb-4">
+
+            <div class="card">
+
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96" /><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+                <div class="card-body">
+                    <h5 class="card-title">@obj.Title</h5>
+                    <div class="card-text ">
+                        <strong>State:</strong><p>@obj.State</p>
+                        <strong>Zip:</strong><p>@obj.Zip</p>
+                        <strong>City:</strong><p>@obj.City</p>
+                        <strong>Address:</strong><p>@obj.Address</p>
+                        <strong>Owner:</strong><p>@obj.OwnerId</p>
+                        <strong>Phone:</strong><p>@obj.Phone</p>
+                    </div>
+                    <a href="#" class="btn btn-primary">View Details</a>
+                    <a href="#" class="btn btn-secondary">Contact Owner</a>
                 </div>
-                <a href="#" class="btn btn-primary">View Details</a>
-                <a href="#" class="btn btn-secondary">Contact Owner</a>
+
             </div>
+
         </div>
- </div>
+    }
+</div>
