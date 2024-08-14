@@ -8,6 +8,7 @@ namespace AirBNBClone.Pages.Demo.Rentals
     public class IndexModel : PageModel
     {
         private readonly UnitOfWork _unitOfWork;
+        public IEnumerable<Rental> objRentalList;
 
         public IndexModel(UnitOfWork unitOfWork)
         {
@@ -17,7 +18,6 @@ namespace AirBNBClone.Pages.Demo.Rentals
             objFeeAmountList = new List<int>();
             objAmenityList = new List<Amenity>();
             objRentalAmenityList = new List<RentalAmenity>();
-            objPhotoList = new List<Photo>();
         }
 
         public Rental objRental;
@@ -27,7 +27,6 @@ namespace AirBNBClone.Pages.Demo.Rentals
 
         public List<Amenity> objAmenityList;
         public List<RentalAmenity> objRentalAmenityList;
-        public List<Photo> objPhotoList;
 
         public IActionResult OnGet(int id)
         {
@@ -46,12 +45,8 @@ namespace AirBNBClone.Pages.Demo.Rentals
             {
                 objAmenityList.Add(_unitOfWork.Amenity.GetById(rentalAmenity.AmenityId));
             }
-
-            // now for Photo
-            objPhotoList = _unitOfWork.Photo.GetAll().Where(x => x.RentalId == id).ToList();
-
             return Page();
-        }   
+        }
 
     }
 }
