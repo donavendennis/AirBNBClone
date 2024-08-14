@@ -5,14 +5,11 @@
 }
 
 <h1>Reservations</h1>
-
-<a href="/AdminPages/ReservationAdmin/Create" class="btn btn-primary mb-3">Create New Reservation</a>
-
+<!--<a asp-page="Upsert" class="btn btn-primary mb-3">Create New Reservation</a>-->
+<!--Admins shouldn't be able create new reservations, but we can re-use this code for the user side and have this go to search to book a new reservation-->
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>User Id</th>
             <th>Rental Id</th>
             <th>Start</th>
             <th>End</th>
@@ -21,35 +18,18 @@
         </tr>
     </thead>
     <tbody>
-
-        <tr>
-            <td>INSERT RESERV ID</td>
-            <td>INSERT RESERV USER ID</td>
-            <td>INSERT RESERV RENTAL ID</td>
-            <td>INSERT RESERV START DATE</td>
-            <td>INSERT RESERV END DATE</td>
-            <td>INSERT RESERV CONFIRM</td>
-            <td>
-                <a href="/AdminPages/ReservationAdmin/Edit/INSERT RESERV ID" class="btn btn-warning btn-sm">Edit</a>
-                <a href="/AdminPages/ReservationAdmin/Delete/INSERT RESERV ID" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-        </tr>
-
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.RentalId</td>
+                <td>@reservation.Start</td>
+                <td>@reservation.End</td>
+                <td>@reservation.Confirm</td>
+                <td>
+                    <a asp-page="Upsert" asp-route-id="@reservation.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-page="Delete" asp-route-id="@reservation.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-
-<!-- @foreach (var reservation in Model.Reservations)
-{
-                    <tr>
-                        <td>@reservation.Id</td>
-                        <td>@reservation.UserId</td>
-                        <td>@reservation.RentalId</td>
-                        <td>@reservation.Start</td>
-                        <td>@reservation.End</td>
-                        <td>@reservation.Confirm</td>
-                        <td>
-                            <a href="/AdminPages/ReservationAdmin/Edit/@reservation.Id" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="/AdminPages/ReservationAdmin/Delete/@reservation.Id" class="btn btn-danger btn-sm">Delete</a>
-                        </td>
-                    </tr>
-}-->
