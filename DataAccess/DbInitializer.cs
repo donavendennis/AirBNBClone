@@ -39,7 +39,7 @@ namespace DataAccess.DbInitializer
 
             }
 
-            if (_db.Amenities.Any() || _db.ApplicationUsers.Any() || _db.Discounts.Any() || _db.Fees.Any() || _db.FeeRentals.Any() || _db.Photos.Any() || _db.Prices.Any() || _db.Rental.Any() || _db.RentalAmenities.Any() || _db.Reservation.Any())
+            if (_db.Amenities.Any() || _db.ApplicationUsers.Any() || _db.Discounts.Any() || _db.Fees.Any() || _db.FeeRentals.Any() || _db.Photos.Any() || _db.Prices.Any() || _db.Rental.Any() || _db.RentalAmenities.Any() || _db.Reservations.Any())
             {
                 //DB has been seeded
             }
