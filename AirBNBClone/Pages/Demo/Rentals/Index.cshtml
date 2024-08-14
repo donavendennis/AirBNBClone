@@ -25,7 +25,19 @@
 {
     <p>Discount of <b>@obj.Percentage</b> for <b>@obj.Daycount</b> days.</p>
 }
+
+
+<h3>Rental Availability Debug</h3>
+<!--        public List<String> objAvailabilityStringList;
+        public List<DateTime> objAvailabilityDateTimeList;
+            
+        -->
+@foreach (var (obj, date) in Model.objAvailabilityStringList.Zip(Model.objAvailabilityDateTimeList, (a, b) => (a, b)))
+{
+    <p><b>@obj</b> is available on <b>@date</b>.</p>
+}
 <h3>Rental Images Debug</h3>
+
 @foreach (var obj in Model.objPhotoList)
 {
     <img src="data:@obj.ImageType;base64,@(Convert.ToBase64String(obj.ImageData))" />
