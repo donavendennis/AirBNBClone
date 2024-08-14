@@ -11,13 +11,13 @@ namespace Infrastructure.Models
         [Required]
         public int RentalId { get; set; }
 
-        // this is a datetime
+        // this is a dateonly
 
         [Required]
-        public DateTime Start { get; set; }
+        public DateOnly Start { get; set; }
 
         [Required]
-        public DateTime End { get; set; }
+        public DateOnly End { get; set; }
 
         [Required]
         public int Amount { get; set; }

@@ -4,8 +4,5 @@
 }
 @foreach (var obj in Model.objDiscountList)
 {
-    <div>
-        <p>@obj.Daycount</p>
-        <p>@obj.Percentage</p>
-    </div>
+    <p>Rental #<b>@obj.RentalId</b> offers <b>@obj.Percentage</b>% off when booking continuously for <b>@obj.Daycount</b> days</p>
 }
