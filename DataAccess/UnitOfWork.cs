@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Interfaces;
 using Infrastructure.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess
 {
@@ -24,7 +23,7 @@ namespace DataAccess
         public IGenericRepository<RentalAmenity> _RentalAmenity;
         public IGenericRepository<Reservation> _Reservation;
 
-        public IGenericRepository<Amenity> Amenity 
+        public IGenericRepository<Amenity> Amenity
         {
             get
             {
