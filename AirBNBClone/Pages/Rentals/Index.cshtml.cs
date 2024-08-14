@@ -8,6 +8,7 @@ namespace AirBNBClone.Pages.Demo.Rentals
     public class IndexModel : PageModel
     {
         private readonly UnitOfWork _unitOfWork;
+        public IEnumerable<Rental> objRentalList;
 
         public IndexModel(UnitOfWork unitOfWork)
         {
@@ -45,7 +46,7 @@ namespace AirBNBClone.Pages.Demo.Rentals
                 objAmenityList.Add(_unitOfWork.Amenity.GetById(rentalAmenity.AmenityId));
             }
             return Page();
-        }   
+        }
 
     }
 }

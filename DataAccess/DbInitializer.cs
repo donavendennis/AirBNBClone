@@ -1,10 +1,8 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.Interfaces;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Interfaces;
 using Utility;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System;
 
 
 namespace DataAccess.DbInitializer
@@ -41,7 +39,7 @@ namespace DataAccess.DbInitializer
 
             }
 
-            if (_db.Amenities.Any() || _db.ApplicationUsers.Any() || _db.Discounts.Any() || _db.Fees.Any() || _db.FeeRentals.Any() || _db.Photos.Any() || _db.Prices.Any() || _db.Rental.Any() || _db.RentalAmenities.Any() || _db.Reservations.Any())
+            if (_db.Amenities.Any() || _db.ApplicationUsers.Any() || _db.Discounts.Any() || _db.Fees.Any() || _db.FeeRentals.Any() || _db.Photos.Any() || _db.Prices.Any() || _db.Rental.Any() || _db.RentalAmenities.Any() || _db.Reservation.Any())
             {
                 //DB has been seeded
             }
@@ -52,6 +50,7 @@ namespace DataAccess.DbInitializer
 
                 _roleManager.CreateAsync(new IdentityRole(SD.AdminRole)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.RenterRole)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(SD.OwnerRole)).GetAwaiter().GetResult();
 
                 //Create at least one "Super Admin" or “Admin”.  Repeat the process for other users you want to seed
 
