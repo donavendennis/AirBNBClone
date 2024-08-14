@@ -121,25 +121,30 @@
 
             <div class="card">
                 <!--Now use an image-->
-                <img class="card-img-top" src="/Images?id=@megaObj.ImageId" alt="Image cap">
+                <img class="card-img-top" src="/Images?id=@megaObj.ImageId" alt="Image cap" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">@megaObj.Rental.Title</h5>
                     <h6>@megaObj.Rental.Beds Beds, @megaObj.Rental.Baths Baths</h6>
-                    <div class="card-text ">
-                        <strong>Country:</strong><p>@megaObj.Rental.Country</p>
-                        <strong>State:</strong><p>@megaObj.Rental.State</p>
-                        <strong>Zip:</strong><p>@megaObj.Rental.Zip</p>
-                        <strong>City:</strong><p>@megaObj.Rental.City</p>
-                        <strong>Address:</strong><p>@megaObj.Rental.Address</p>
-                        <strong>Owner:</strong><p>@megaObj.OwnerName</p>
-                        <strong>Phone:</strong><p>@megaObj.PhoneNumber</p>
+                    <div class="card-text">
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <strong>Country:</strong> <span>@megaObj.Rental.Country</span>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <strong>State:</strong> <span>@megaObj.Rental.State</span>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <strong>City:</strong> <span>@megaObj.Rental.City</span>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <strong>Address:</strong> <span>@megaObj.Rental.Address</span>
+                            </div>
+                        </div>
                     </div>
                     <a asp-page="/RentalDetails" asp-route-Id="@megaObj.Rental.Id" class="btn btn-primary">View Details</a>
                     <a href="https://wa.me/@megaObj.PhoneNumber" class="btn btn-secondary">Contact Owner</a>
                 </div>
-
             </div>
-
         </div>
     }
 </div>
