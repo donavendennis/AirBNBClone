@@ -1,0 +1,11 @@
+﻿@page
+@model AirBNBClone.Pages.Demo.Discounts.IndexModel
+@{
+}
+@foreach (var obj in Model.objDiscountList)
+{
+    <div>
+        <p>@obj.Daycount</p>
+        <p>@obj.Percentage</p>
+    </div>
+}

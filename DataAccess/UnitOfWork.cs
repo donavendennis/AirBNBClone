@@ -53,7 +53,7 @@ namespace DataAccess
                 {
                     _Discount = new GenericRepository<Discount>(_dbContext);
                 }
-                return Discount;
+                return _Discount;
             }
         }
         public IGenericRepository<Fee> Fee
