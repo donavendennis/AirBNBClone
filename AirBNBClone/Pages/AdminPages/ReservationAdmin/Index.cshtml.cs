@@ -23,7 +23,6 @@ namespace AirBNBClone.Pages.AdminPages.ReservationAdmin
             Reservations = (await _unitOfWork.Reservation.GetAllAsync()).ToList();
             foreach (var reservation in Reservations)
             {
-                reservation.Rental = await _unitOfWork.Rental.GetAsync(x => x.Id == reservation.RentalId);
                 reservation.User = await _unitOfWork.ApplicationUser.GetAsync(x => x.Id == reservation.UserId);
             }
         }

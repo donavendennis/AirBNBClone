@@ -102,7 +102,7 @@ namespace DataAccess.DbInitializer
                     Id = "cafecafe-6c0d-4d3e-8d1d-1d9444f119c6"
                 }, "Owner123*").GetAwaiter().GetResult();
 
-                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "superadmin@test.com");
+                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@test.com");
 
                 _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
 
@@ -302,8 +302,8 @@ namespace DataAccess.DbInitializer
 
                 var Reservations = new List<Reservation>
                 {
-                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(5), End = DateOnly_Today.AddDays(10), Confirm = true },
-                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(15), End = DateOnly_Today.AddDays(15), Confirm = false },
+                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(5), End = DateOnly_Today.AddDays(10), Confirm = true, OrderDate = DateTime.Now },
+                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(15), End = DateOnly_Today.AddDays(15), Confirm = false , OrderDate = DateTime.Now},
                 };
 
                 foreach (var r in Reservations)
