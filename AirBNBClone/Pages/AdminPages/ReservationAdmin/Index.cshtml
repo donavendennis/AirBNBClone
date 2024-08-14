@@ -1,0 +1,55 @@
+﻿@page
+@model AirBNBClone.Pages.AdminPages.ReservationAdmin.IndexModel
+@{
+    ViewData["Title"] = "Reservations";
+}
+
+<h1>Reservations</h1>
+
+<a href="/AdminPages/ReservationAdmin/Create" class="btn btn-primary mb-3">Create New Reservation</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>User Id</th>
+            <th>Rental Id</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Confirm</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>INSERT RESERV ID</td>
+            <td>INSERT RESERV USER ID</td>
+            <td>INSERT RESERV RENTAL ID</td>
+            <td>INSERT RESERV START DATE</td>
+            <td>INSERT RESERV END DATE</td>
+            <td>INSERT RESERV CONFIRM</td>
+            <td>
+                <a href="/AdminPages/ReservationAdmin/Edit/INSERT RESERV ID" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/AdminPages/ReservationAdmin/Delete/INSERT RESERV ID" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<!-- @foreach (var reservation in Model.Reservations)
+{
+                    <tr>
+                        <td>@reservation.Id</td>
+                        <td>@reservation.UserId</td>
+                        <td>@reservation.RentalId</td>
+                        <td>@reservation.Start</td>
+                        <td>@reservation.End</td>
+                        <td>@reservation.Confirm</td>
+                        <td>
+                            <a href="/AdminPages/ReservationAdmin/Edit/@reservation.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/AdminPages/ReservationAdmin/Delete/@reservation.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+}-->
