@@ -86,6 +86,21 @@ namespace DataAccess.DbInitializer
                     Id = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5"
                 }, "Renter123*").GetAwaiter().GetResult();
 
+                _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "renter2@test.com",
+                    Email = "renter2@test.com",
+                    FirstName = "Renter2",
+                    LastName = "Renter2",
+                    PhoneNumber = "18015556919",
+                    StreetAddress = "123 Main Street",
+                    State = "UT",
+                    PostalCode = "84408",
+                    City = "Ogden",
+                    EmailConfirmed = true,
+                    Id = "babe2222-6c0d-4d3e-8d1d-1d9444f119c5"
+                }, "Renter123*").GetAwaiter().GetResult();
+
                 // make a owner using similar testing email
                 _userManager.CreateAsync(new ApplicationUser
                 {
@@ -102,6 +117,21 @@ namespace DataAccess.DbInitializer
                     Id = "cafecafe-6c0d-4d3e-8d1d-1d9444f119c6"
                 }, "Owner123*").GetAwaiter().GetResult();
 
+                _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "owner2@test.com",
+                    Email = "owner2@test.com",
+                    FirstName = "Owner2",
+                    LastName = "Owner2",
+                    PhoneNumber = "18015556919",
+                    StreetAddress = "123 Main Street",
+                    State = "UT",
+                    PostalCode = "84408",
+                    City = "Ogden",
+                    EmailConfirmed = true,
+                    Id = "cafe2222-6c0d-4d3e-8d1d-1d9444f119c6"
+                }, "Owner123*").GetAwaiter().GetResult();
+
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@test.com");
 
                 _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
@@ -114,6 +144,14 @@ namespace DataAccess.DbInitializer
                 // now for owner
 
                 user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "owner@test.com");
+                _userManager.AddToRoleAsync(user, SD.OwnerRole).GetAwaiter().GetResult();
+
+                user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "renter2@test.com");
+                _userManager.AddToRoleAsync(user, SD.RenterRole).GetAwaiter().GetResult();
+
+                // now for owner
+
+                user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "owner2@test.com");
                 _userManager.AddToRoleAsync(user, SD.OwnerRole).GetAwaiter().GetResult();
 
                 var Amenities = new List<Amenity>
@@ -144,7 +182,6 @@ namespace DataAccess.DbInitializer
                 {
                     new Rental { Title = "My Test House (posh)", Beds = 5, Baths = 5, Country = "PoshCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4", Description = "MyDesc"},
                     new Rental { Title = "My Test House (cheap)", Beds = 1, Baths = 1, Country = "CheapCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4", Description = "MyDesc2"},
-
                 };
 
                 foreach (var r in Rentals)
@@ -256,6 +293,9 @@ namespace DataAccess.DbInitializer
 
                 byte[] bytes_emptyphoto = System.Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAACklEQVR4AWNgAAAAAgABc3UBGAAAAABJRU5ErkJggg==");
 
+                // bytes bytes_readimg is empty
+                byte[] bytes_readimg = new byte[0];
+
                 // image file names are cheap_house.png, posh_house.png
                 // a list of the above
                 var imageFiles = new List<string>
@@ -272,9 +312,9 @@ namespace DataAccess.DbInitializer
                 {
                     // the images are stored in the wwwroot/images/preset folder
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/preset", imageFile);
-                    bytes_emptyphoto = System.IO.File.ReadAllBytes(path);
+                    bytes_readimg = System.IO.File.ReadAllBytes(path);
                     // then put the bytes in a dictionary with the key being the image file name
-                    imageBytes.Add(imageFile, bytes_emptyphoto);
+                    imageBytes.Add(imageFile, bytes_readimg);
 
                 }
 
@@ -303,7 +343,7 @@ namespace DataAccess.DbInitializer
                 var Reservations = new List<Reservation>
                 {
                     new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(5), End = DateOnly_Today.AddDays(10), Confirm = true, OrderDate = DateTime.Now },
-                    new Reservation { UserId = "babebabe-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(15), End = DateOnly_Today.AddDays(15), Confirm = false , OrderDate = DateTime.Now},
+                    new Reservation { UserId = "babe2222-6c0d-4d3e-8d1d-1d9444f119c5", RentalId = 1, Start = DateOnly_Today.AddDays(15), End = DateOnly_Today.AddDays(15), Confirm = false , OrderDate = DateTime.Now},
                 };
 
                 foreach (var r in Reservations)
