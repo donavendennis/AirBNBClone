@@ -101,8 +101,6 @@ namespace AirBNBClone.Pages.Reservations
 
                 checkingDay = checkingDay.AddDays(1);
             }
-
-
         }
 
         public IActionResult OnPost(int Id, [FromBody] DateOnly prefillStartDate, [FromBody] DateOnly prefillEndDate)
