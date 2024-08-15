@@ -68,7 +68,6 @@ namespace AirBNBClone.Pages.Reservations
 
             while (checkingDay <= prefillEndDate)
             {
-                
                 // first get if there are any reservations
                 var objReservation = _unitOfWork.Reservation.GetAll().Where(x => x.RentalId == Id && x.Start <= checkingDay && x.End >= checkingDay).FirstOrDefault();
                 if (objReservation is not null)
@@ -98,8 +97,6 @@ namespace AirBNBClone.Pages.Reservations
 
                 checkingDay = checkingDay.AddDays(1);
             }
-
-
         }
 
         public void OnPost()
