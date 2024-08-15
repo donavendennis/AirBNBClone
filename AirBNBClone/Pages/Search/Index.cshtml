@@ -1,4 +1,5 @@
 ﻿@page
+@using Utility
 @model AirBNBClone.Pages.Search.IndexModel
 @{
     ViewData["Title"] = "Search";
@@ -46,7 +47,7 @@
         </div>
     </div>
     <!--<div class="form-row d-flex align-items-center justify-content-start flex-wrap w-100">
-        
+
         <div class="col-auto mx-1">
             <select class="form-control mb-2" name="Amenities">
                 <option value="">Extra amenities</option>
@@ -142,7 +143,14 @@
                         </div>
                     </div>
                     <a asp-page="/RentalDetails" asp-route-Id="@megaObj.Rental.Id" class="btn btn-primary">View Details</a>
-                    <a href="https://wa.me/@megaObj.PhoneNumber" class="btn btn-secondary">Contact Owner</a>
+                    @if (!User.IsInRole(SD.OwnerRole) && !User.IsInRole(SD.RenterRole) && !User.IsInRole(SD.AdminRole))
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-secondary">Login to contact owner</a>
+                    }
+                    else
+                    {
+                        <a href="https://wa.me/@megaObj.PhoneNumber" class="btn btn-secondary">Contact Owner</a>
+                    }
                 </div>
             </div>
         </div>
