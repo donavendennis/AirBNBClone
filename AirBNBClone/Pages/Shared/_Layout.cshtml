@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Utility
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,15 +36,42 @@
                                 <a class="dropdown-item" asp-area="" asp-page="/Demo/Amenities/Index">Show all amenities</a>
                             </div>
                         </li>-->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">SiteAdmin</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-page="/AdminPages/Fees/Index">Fees</a>
-                                <a class="dropdown-item" asp-area="" asp-page="/AdminPages/Amenities/Index">Amenities</a>
-                                <a class="dropdown-item" asp-area="" asp-page="/AdminPages/ReservationAdmin/Index">Reservations</a>
-                                <a class="dropdown-item" asp-area="" asp-page="/Rentals/Index">Rentals</a>
-                            </div>
-                        </li>
+                        @if (User.IsInRole(SD.AdminRole))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Site Admin</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-page="/AdminPages/Fees/Index">Fees</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="/AdminPages/Amenities/Index">Amenities</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="/AdminPages/ReservationAdmin/Index">All Reservations</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="/Rentals/Index">All Rentals</a>
+                                </div>
+                            </li>
+                        }
+                        else if (User.IsInRole(SD.RenterRole))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Renter</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-page="/AdminPages/ReservationAdmin/Index">My Reservations</a>
+                                </div>
+                            </li>
+                        }
+                        else if (User.IsInRole(SD.OwnerRole))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Owner</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-page="/AdminPages/ReservationAdmin/Index">My Rentals</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="/AdminPages/ReservationAdmin/Index">My Reservations</a>
+                                </div>
+                            </li>
+                        } else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login for more actions!</a>
+                            </li>
+                        }
                         <!--<a class="dropdown-item" asp-area="" asp-page="/Reservations/DateSelector">Reservations (TBD)</a>-->
                         <!--<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Search/Index">Search</a>

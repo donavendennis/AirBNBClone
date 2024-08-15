@@ -52,9 +52,6 @@ namespace AirBNBClone.Pages.Demo.ImageUpload
             {
                 // do nothing
             }
-
-
-
         }
     }
 }

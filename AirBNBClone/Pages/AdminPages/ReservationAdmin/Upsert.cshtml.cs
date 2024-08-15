@@ -10,6 +10,7 @@ namespace AirBNBClone.Pages.AdminPages.ReservationAdmin
         private readonly UnitOfWork _unitOfWork;
         [BindProperty]
         public Reservation objReservation { get; set; }
+        private static DateTime tempOrderDate;
 
         public UpsertModel(UnitOfWork unitOfWork)
         {
@@ -19,6 +20,7 @@ namespace AirBNBClone.Pages.AdminPages.ReservationAdmin
 
         public IActionResult OnGet(int? id)
         {
+            System.Diagnostics.Debug.WriteLine("Trigger OnGet");
             objReservation = new Reservation();
 
             if (id != 0 && id.HasValue)
@@ -32,26 +34,37 @@ namespace AirBNBClone.Pages.AdminPages.ReservationAdmin
             }
 
             objReservation.User = _unitOfWork.ApplicationUser.Get(x => x.Id == objReservation.UserId);
-
+            tempOrderDate = (DateTime)objReservation.OrderDate;
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
+            System.Diagnostics.Debug.WriteLine("Trigger OnPost");
+            /*if (!ModelState.IsValid)
             {
+                System.Diagnostics.Debug.WriteLine("ModelState Invalid?");
                 return Page();
+            }*/
+
+            if (objReservation.OrderDate == null)
+            {
+                objReservation.OrderDate = tempOrderDate; // System.DateTime.Now;
+                System.Diagnostics.Debug.WriteLine("Warning: No OrderDate ???");
             }
 
             if (objReservation.Id == 0)
             {
                 _unitOfWork.Reservation.Add(objReservation);
+
                 TempData["success"] = "Reservation added successfully";
+                System.Diagnostics.Debug.WriteLine("Reservation added successfully");
             }
             else
             {
                 _unitOfWork.Reservation.Update(objReservation);
                 TempData["success"] = "Reservation updated successfully";
+                System.Diagnostics.Debug.WriteLine("Reservation updated successfully");
             }
             _unitOfWork.Commit();
 
