@@ -21,7 +21,7 @@ namespace DataAccess
         public IGenericRepository<Price> _Price;
         public IGenericRepository<Rental> _Rental;
         public IGenericRepository<RentalAmenity> _RentalAmenity;
-        public IGenericRepository<Reservation> _Reservation;
+        public IReservationRepository<Reservation> _Reservation;
 
         public IGenericRepository<Amenity> Amenity
         {
@@ -122,13 +122,13 @@ namespace DataAccess
                 return _RentalAmenity;
             }
         }
-        public IGenericRepository<Reservation> Reservation
+        public IReservationRepository<Reservation> Reservation
         {
             get
             {
                 if (_Reservation == null)
                 {
-                    _Reservation = new GenericRepository<Reservation>(_dbContext);
+                    _Reservation = new ReservationRepository(_dbContext);
                 }
                 return _Reservation;
             }

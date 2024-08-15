@@ -41,6 +41,8 @@ namespace AirBNBClone.Pages
         public List<String> objAvailabilityStringList;
         public List<DateOnly> objAvailabilityDateList;
 
+        public int DayOfWeek = 0;
+
         public int PriceSum;
         public String PriceSumFormula;
 
@@ -58,6 +60,61 @@ namespace AirBNBClone.Pages
 
         public IActionResult OnGet(int Id, DateOnly? QueryStart, DateOnly? QueryEnd)
         {
+
+            //iterate from today to 30 days from now
+
+            // get the current date
+            DateOnly currentDate_checkavail = DateOnly.FromDateTime(DateTime.Now);
+
+            DayOfWeek = (int)currentDate_checkavail.DayOfWeek;
+
+            for (int i = 0; i < 30; i++)
+            {
+                // get the current date plus i days
+                DateOnly futureDate = currentDate_checkavail.AddDays(i);
+
+                objAvailabilityDateList.Add(futureDate);
+
+                // check if the future date is in the reservation list
+                var objReservation = _unitOfWork.Reservation.GetAll().Where(x => x.RentalId == Id && x.Start <= futureDate && x.End >= futureDate).FirstOrDefault();
+
+                // if it is, then we need to remove it from the list of available dates
+                if (objReservation is not null)
+                {
+                    // check if the reservation is confirmed
+                    if (objReservation.Confirm)
+                    {
+                        // add string Unavailable to the list
+                        objAvailabilityStringList.Add("Already booked and confirmed");
+                    }
+                    else
+                    {
+                        // add string Available to the list
+                        objAvailabilityStringList.Add("Booking in progress, awaiting confirmation");
+
+                    }
+                }
+                else
+                {
+                    // get all prices which is belonging to this day with the highest Priority
+                    var objPrice = _unitOfWork.Price.GetAll().Where(x => x.RentalId == Id && x.Start <= futureDate && x.End >= futureDate).OrderByDescending(x => x.Priority).FirstOrDefault();
+                    if (objPrice is not null)
+                    {
+                        // add string Available to the list
+                        objAvailabilityStringList.Add("Available at a price of " + objPrice.Amount);
+                    }
+                    else
+                    {
+                        // add string Available to the list
+                        objAvailabilityStringList.Add("Price TBD by owner");
+                    }
+
+                }
+            }
+
+
+
+
             Id_ReEnter = Id;
             objRental = _unitOfWork.Rental.GetById(Id);
             objFeeRentalList = _unitOfWork.FeeRental.GetAll().Where(x => x.RentalId == Id).ToList();
