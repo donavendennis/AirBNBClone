@@ -40,7 +40,72 @@
                     <a href="/Search" class="btn btn-outline-secondary btn px-4">Go Back</a> <!--This will need to go back to search from 'RentalID'-->
                 </div>
             </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Calendar for the next 30 days</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < 7; i++)
+                                {
+                                    <tr>
+                                        @for (int j = 0; j < 7; j++)
+                                        {
+                                            var day = i * 7 + j - Model.DayOfWeek;
+                                            if (day >= 30)
+                                            {
+                                                break;
+                                            }
+                                            if (day < 0)
+                                            {
+                                                <td></td>
+                                                continue;
+                                            }
+                                            var date = DateTime.Today.AddDays(day);
+                                            var availabilityString = Model.objAvailabilityStringList[day];
+                                            //var dayOfWeek = Model.DayOfWeek.FirstOrDefault(d => d.DayOfWeek == date.DayOfWeek);
+                                            var isAvailable = availabilityString.Contains("Available");
+
+                                            <td @(isAvailable ? "class=bg-success" : "class=bg-danger")>
+                                                @date.Day.ToString()
+                                                @if (isAvailable)
+                                                {
+                                                    <br />
+
+                                                    <span>@availabilityString</span>
+                                                }
+                                                else
+                                                {
+                                                    <br />
+
+                                                    <span>@availabilityString</span>
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
 }
