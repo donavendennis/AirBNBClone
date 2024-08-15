@@ -180,9 +180,8 @@ namespace DataAccess.DbInitializer
     OwnerId: A string property representing the owner's identifier.*/
                 var Rentals = new List<Rental>
                 {
-                    new Rental { Title = "My Test House (posh)", Beds = 5, Baths = 5, Country = "PoshCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "cafecafe-6c0d-4d3e-8d1d-1d9444f119c6" },
-                    new Rental { Title = "My Test House (cheap)", Beds = 1, Baths = 1, Country = "CheapCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "cafe2222-6c0d-4d3e-8d1d-1d9444f119c6" },
-
+                    new Rental { Title = "My Test House (posh)", Beds = 5, Baths = 5, Country = "PoshCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4", Description = "MyDesc"},
+                    new Rental { Title = "My Test House (cheap)", Beds = 1, Baths = 1, Country = "CheapCountry", State = "State", Zip = "84408", City = "City", Address = "Addr", Phone = "8015556919", OwnerId = "deadbeef-6c0d-4d3e-8d1d-1d9444f119c4", Description = "MyDesc2"},
                 };
 
                 foreach (var r in Rentals)
