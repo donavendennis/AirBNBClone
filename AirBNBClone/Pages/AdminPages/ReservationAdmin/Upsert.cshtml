@@ -15,17 +15,24 @@
             <div class="border p-3">
                 <div class="form-floating py-2 col-12">
                     <input asp-for="objReservation.UserId" class="form-control border-0 shadow" disabled hidden />
-                    <input class="form-control border-0 shadow" value="@Model.objReservation.User?.FullName" disabled/>
+                    <input class="form-control border-0 shadow" value="@Model.objReservation.User?.FullName" disabled />
                     <label asp-for="objReservation.UserId" class="ms-2"></label>
                     <span asp-validation-for="objReservation.UserId" class="text-danger"></span>
                     <input type="hidden" asp-for="objReservation.UserId" />
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="objReservation.RentalId" class="form-control border-0 shadow" disabled hidden/>
+                    <input asp-for="objReservation.RentalId" class="form-control border-0 shadow" disabled hidden />
                     <input class="form-control border-0 shadow" value="@Model.objReservation.RentalId" disabled />
                     <label asp-for="objReservation.RentalId" class="ms-2"></label>
                     <span asp-validation-for="objReservation.RentalId" class="text-danger"></span>
                     <input type="hidden" asp-for="objReservation.RentalId" />
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="objReservation.OrderDate" class="form-control border-0 shadow" disabled hidden />
+                    <input class="form-control border-0 shadow" value="@Model.objReservation.OrderDate" disabled />
+                    <label asp-for="objReservation.OrderDate" class="ms-2"></label>
+                    <span asp-validation-for="objReservation.OrderDate" class="text-danger"></span>
+                    <input type="hidden" asp-for="objReservation.OrderDate" />
                 </div>
                 <div class="form-floating py-2 col-12">
                     <input asp-for="objReservation.Start" type="date" class="form-control border-0 shadow" />
