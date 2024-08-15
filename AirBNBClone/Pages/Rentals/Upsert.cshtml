@@ -1,4 +1,5 @@
 ﻿@page
+@using Infrastructure.Models
 @model AirBNBClone.Pages.Rentals.UpsertModel
 @{
 }
@@ -62,11 +63,15 @@
                         </div>
                         <div class="mb-3">
                             <label class="ms-2">Fees</label>
-                            @foreach (var amenity in Model.AmenitiesList)
+                            @foreach (var fee in Model.FeesList)
                             {
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="@amenity.Value" name="Amenities" value="@amenity.Value" @(amenity.Selected ? "checked" : "")>
-                                    <label class="form-check-label" for="@amenity.Value">@amenity.Text</label>
+                                    <input class="form-check-input" type="checkbox" id="@fee.Value" name="Amenities" value="@fee.Value" @(fee.Selected ? "checked" : "")>
+                                    <label class="form-check-label" for="@fee.Value">@fee.Text</label>
+                                </div>
+                                <div class="formAmount">
+                                    <input class"type="number" step=".5" class="form-control" id="txtUnitPrice" />
+                                    <span asp-validation-for="@Model.objRental.Baths" class="text-danger"></span>
                                 </div>
                             }
                         </div>
@@ -84,17 +89,12 @@
                 </div>
                 <div class="row pt-2">
                     <div class="mb-3">
-                        <label for="" class="form-label">@(Model.objRental.ImageUrl != null ? "Replace " : "")Picture</label>
-                        <input class="form-control" type="file" asp-for="@Model.objRental.ImageUrl" id="uploadBox">
-                        <span class="text-danger" asp-validation-for="@Model.objRental.ImageUrl"></span> @*product image*@
-                    </div>
-                    <div class="mb-3">
-                        @if (Model.objRental.ImageUrl != null)
+                        @if (Model.objRental != null)
                         {
-                            <input class="visually-hidden" type="hidden" asp-for="@Model.objRental.ImageUrl" />
+                            <input class="visually-hidden" type="hidden" asp-for="@Model.objRental" />
                             <div class="col-4">
                                 <div class="mt-1 form-text">Current picture</div>
-                                <img class="img-thumbnail" src="@Model.objRental.ImageUrl" />
+                                <img class="img-thumbnail" src="@Model.objRental" />
                             </div>
                         }
                     </div>
@@ -118,7 +118,8 @@
             </form>
         </div>
     </div>
-    @section Scripts {
+    
+    /*@section Scripts {
         <script>
             tinymce.init({
                 selector: 'textarea',
@@ -182,5 +183,5 @@
                     return true;
                 }
         </script>
-    }
+    }*/
 }

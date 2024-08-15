@@ -18,12 +18,14 @@ namespace AirBNBClone.Pages.Rentals
 
         public IEnumerable<SelectListItem> AmenitiesList { get; set; }
         public IEnumerable<SelectListItem> FeesList { get; set; }
+        public Photo objPhoto { get; set; }
 
         public UpsertModel(UnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
             objRental = new Rental();
+            objPhoto = new Photo();
         }
 
         public IActionResult OnGet(int? id)
@@ -61,90 +63,57 @@ namespace AirBNBClone.Pages.Rentals
             }
             return Page();
         }
-        /*
+
+        public void uploadPhoto(int rentalId)
+        {
+
+            var files = HttpContext.Request.Form.Files;
+
+            // print the length of files to debug console
+            System.Diagnostics.Debug.WriteLine(files.Count);
+
+            var myTempStream = new MemoryStream();
+
+            files[0].CopyTo(myTempStream);
+
+            objPhoto.ImageData = myTempStream.ToArray();
+
+            objPhoto.ImageType = files[0].ContentType;
+
+            // check if the current id is in the database by attempting a GetById
+            var obj = _unitOfWork.Photo.GetById(objPhoto.Id);
+
+            // check if obj is null
+
+            if (obj is not null)
+            {
+                // it worked, so we need to delete this image with this Id
+                obj.ImageData = objPhoto.ImageData;
+                obj.ImageType = objPhoto.ImageType;
+                obj.RentalId = rentalId;
+                _unitOfWork.Photo.Update(obj);
+            }
+        }
+        
         public IActionResult OnPost()
         {
-            string webRootPath = _webHostEnvironment.WebRootPath;
-            //Form.Files[] array enctype="multipart/form-data"
             var files = HttpContext.Request.Form.Files;
 
             // Check if the product is new (create)
             if (objRental.Id == 0)
             {
-                // Check if an image was uploaded
-                if (files.Count > 0)
-                {
-                    // Generate a unique identifier for the image name
-                    string fileName = Guid.NewGuid().ToString();
-
-                    // Define the path to store the uploaded image
-                    var uploads = Path.Combine(webRootPath, @"images\products\");
-
-                    // Get the file extension
-                    var extension = Path.GetExtension(files[0].FileName);
-
-                    // Create the full path for the uploaded image
-                    var fullPath = Path.Combine(uploads, fileName + extension);
-
-                    // Save the uploaded image to the server
-                    using var fileStream = System.IO.File.Create(fullPath);
-                    files[0].CopyTo(fileStream);
-
-                    // Set the URL path for the image in the database
-                    objRental.ImageUrl = @"\images\products\" + fileName + extension;
-                }
-
                 // Add the new product to the database
-                _unitOfWork.Product.Add(objProduct);
-                }
-                else
-                {
-                // Retrieve the existing product from the database
-                var objProductFromDb = _unitOfWork.Product.Get(p => p.Id == objProduct.Id);
-
-                // Check if an image was uploaded
-                if (files.Count > 0)
-                {
-                    // Generate a unique identifier for the new image name
-                    string fileName = Guid.NewGuid().ToString();
-
-                    // Define the path to store the uploaded image
-                    var uploads = Path.Combine(webRootPath, @"images\products\");
-
-                    // Get the file extension
-                    var extension = Path.GetExtension(files[0].FileName);
-
-                    // Delete the existing image associated with the product
-                    if (objProductFromDb.ImageUrl != null)
-                    {
-                        var imagePath = Path.Combine(webRootPath, objRental.ImageUrl.TrimStart('\\'));
-                        if (System.IO.File.Exists(imagePath))
-                        {
-                            System.IO.File.Delete(imagePath);
-                        }
-                    }
-
-                    // Create the full path for the new uploaded image
-                    var fullPath = Path.Combine(uploads, fileName + extension);
-
-                    // Save the new uploaded image to the server
-                    using var fileStream = System.IO.File.Create(fullPath);
-                    files[0].CopyTo(fileStream);
-
-                    // Set the URL path for the new image in the database
-                    obj.ImageUrl = @"\images\products\" + fileName + extension;
-                }
-                else
-                {
-                    // Update the existing product's image URL
-                    objProductFromDb.ImageUrl = objProduct.ImageUrl;
-                }
-
-                // Update the existing product in the database
-                _unitOfWork.Product.Update(objProduct);
+                _unitOfWork.Rental.Add(objRental);
             }
-
-
+            else
+            {
+                // Update the existing product in the database
+                _unitOfWork.Rental.Update(objRental);
+            }
+            if (files.Count > 0)
+            {
+                uploadPhoto(objRental.Id);
+            }
 
             // Save changes to the database
             _unitOfWork.Commit();
@@ -152,8 +121,6 @@ namespace AirBNBClone.Pages.Rentals
             // Redirect to the Products Page
             return RedirectToPage("./Index");
         }
-
-
-    }*/
+    }
 }
-}
+
