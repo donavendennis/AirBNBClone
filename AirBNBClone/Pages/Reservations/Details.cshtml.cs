@@ -16,20 +16,20 @@ namespace AirBNBClone.Pages.Reservations
         {
             _unitOfWork = unitOfWork;
         }
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public DateOnly prefillStartDate { get; set; }
 
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public DateOnly prefillEndDate { get; set; }
 
         [BindProperty]
         public int Id { get; set; } // pass it along
 
         [BindProperty]
-        public DateOnly FirstName { get; set; }
+        public string FirstName { get; set; }
         [BindProperty]
-        public DateOnly LastName { get; set; }
+        public string LastName { get; set; }
         [BindProperty]
         public string Email { get; set; }
         [BindProperty]
@@ -105,21 +105,38 @@ namespace AirBNBClone.Pages.Reservations
 
         }
 
-        public IActionResult OnPost(int Id, DateOnly prefillStartDate, DateOnly prefillEndDate)
+        public IActionResult OnPost(int Id, [FromBody] DateOnly prefillStartDate, [FromBody] DateOnly prefillEndDate)
         {
+
+            Id = int.Parse(Request.Query["id"]);
+            prefillStartDate = DateOnly.Parse(Request.Query["StartDate"]);
+            prefillEndDate = DateOnly.Parse(Request.Query["EndDate"]);
+
+
+
             var PriceSum_final = 0;
             string PriceSumFormula_final = "";
+
+            var objFeeRentalList = _unitOfWork.FeeRental.GetAll().Where(x => x.RentalId == Id).ToList();
+            // go through the filteres FeeRental and get the Fee for each one, putting it in objFeeList
+            foreach (var feeRental in objFeeRentalList)
+            {
+                objFeeList.Add(_unitOfWork.Fee.GetById(feeRental.FeeId));
+                objFeeAmountList.Add(feeRental.Amount);
+                PriceSum_final += feeRental.Amount;
+            }
             // redirect to reservation index with the dates
             //Response.Redirect($"/Reservations/Details?StartDate={prefillStartDate}&EndDate={prefillEndDate}&Id={Id}");
 
             // print the dates to the debug console
-            
+
             System.Diagnostics.Debug.WriteLine("Start Date: " + prefillStartDate);
             System.Diagnostics.Debug.WriteLine("End Date: " + prefillEndDate);
 
             var checkingDay = prefillStartDate;
 
             var separator = "";
+
 
             while (checkingDay <= prefillEndDate)
             {
@@ -179,7 +196,7 @@ namespace AirBNBClone.Pages.Reservations
 
             //return RedirectToPage("OrderConfirmation", new { orderId = ShoppingCartVM.OrderHeader.Id });
             //stripe settings 
-            var domain = "http://11187822:60-dayfreetrial@evnchn-001-site1.ftempurl.com/";
+            var domain = "https://localhost:7080";
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string>
@@ -188,7 +205,7 @@ namespace AirBNBClone.Pages.Reservations
                 },
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
-                SuccessUrl = domain + $"/ReservationAdmin/",
+                SuccessUrl = domain + $"/Reservations/Confirm?Id={ReservationId}",
                 CancelUrl = domain + $"/index",
             };
 
