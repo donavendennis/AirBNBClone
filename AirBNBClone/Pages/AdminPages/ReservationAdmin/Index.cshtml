@@ -10,7 +10,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Rental Id</th>
+            <th>User</th>
+            <th>Rental</th>
             <th>Start</th>
             <th>End</th>
             <th>Confirm</th>
@@ -21,7 +22,8 @@
         @foreach (var reservation in Model.Reservations)
         {
             <tr>
-                <td>@reservation.RentalId</td>
+                <td>@reservation.User.FullName</td>
+                <td>@reservation.Rental.Title</td>
                 <td>@reservation.Start</td>
                 <td>@reservation.End</td>
                 <td>@reservation.Confirm</td>

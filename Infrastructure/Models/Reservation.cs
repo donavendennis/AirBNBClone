@@ -25,5 +25,8 @@ namespace Infrastructure.Models
 
         [ForeignKey("RentalId")]
         public Rental? Rental { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser? User { get; set; }
     }
 }
