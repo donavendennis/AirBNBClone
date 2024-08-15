@@ -1,0 +1,186 @@
+﻿@page
+@model AirBNBClone.Pages.Rentals.UpsertModel
+@{
+}
+@{
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-black pt-4 pb-3 text-center">
+            <h2 class="text-white py-2">@(Model.objRental.Id == 0 ? "Create" : "Edit") Product</h2>
+        </div>
+        <div class="card-body p-4">
+            <form method="post" onsubmit="return ValidateInput()" enctype="multipart/form-data" class="border p-3">
+                <div class="row">
+                    <div class="mb-3">
+                        <label asp-for="@Model.objRental.Title" class="ms-2">Rental Title</label>
+                        <input asp-for="@Model.objRental.Title" class="form-control" id="txtName" />
+                        <span asp-validation-for="@Model.objRental.Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@Model.objRental.Description" class="ms-2">Description</label>
+                        <textarea asp-for="@Model.objRental.Description" class="form-control" rows="3" id="txtDesc"></textarea>
+                        <span asp-validation-for="@Model.objRental.Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label asp-for="@Model.objRental.Address" class="ms-2">Street Address</label>
+                            <input asp-for="@Model.objRental.Address" class="form-control" id="txtUPC" />
+                            <span asp-validation-for="@Model.objRental.Address" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.objRental.City" class="ms-2">City</label>
+                            <input asp-for="@Model.objRental.City" class="form-control" id="txtSize" />
+                            <span asp-validation-for="@Model.objRental.City" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.objRental.State" class="ms-2">State</label>
+                            <input asp-for="@Model.objRental.State" class="form-control" id="txtSize" />
+                            <span asp-validation-for="@Model.objRental.State" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.objRental.Country" class="ms-2">Country</label>
+                            <input asp-for="@Model.objRental.Country" class="form-control" id="txtSize" />
+                            <span asp-validation-for="@Model.objRental.Country" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.objRental.Zip" class="ms-2">Zip Code</label>
+                            <input asp-for="@Model.objRental.Zip" class="form-control" id="txtSize" />
+                            <span asp-validation-for="@Model.objRental.Zip" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label class="ms-2">Amenities</label>
+                            @foreach (var amenity in Model.AmenitiesList)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="@amenity.Value" name="Amenities" value="@amenity.Value" @(amenity.Selected ? "checked" : "")>
+                                    <label class="form-check-label" for="@amenity.Value">@amenity.Text</label>
+                                </div>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label class="ms-2">Fees</label>
+                            @foreach (var amenity in Model.AmenitiesList)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="@amenity.Value" name="Amenities" value="@amenity.Value" @(amenity.Selected ? "checked" : "")>
+                                    <label class="form-check-label" for="@amenity.Value">@amenity.Text</label>
+                                </div>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.objRental.Beds" class="ms-2">Beds</label>
+                            <input asp-for="@Model.objRental.Beds" type="number" step="1" class="form-control" id="txtListPrice" />
+                            <span asp-validation-for="@Model.objRental.Beds" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.objRental.Baths" class="ms-2">Baths</label>
+                            <input asp-for="@Model.objRental.Baths" type="number" step=".5" class="form-control" id="txtUnitPrice" />
+                            <span asp-validation-for="@Model.objRental.Baths" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="mb-3">
+                        <label for="" class="form-label">@(Model.objRental.ImageUrl != null ? "Replace " : "")Picture</label>
+                        <input class="form-control" type="file" asp-for="@Model.objRental.ImageUrl" id="uploadBox">
+                        <span class="text-danger" asp-validation-for="@Model.objRental.ImageUrl"></span> @*product image*@
+                    </div>
+                    <div class="mb-3">
+                        @if (Model.objRental.ImageUrl != null)
+                        {
+                            <input class="visually-hidden" type="hidden" asp-for="@Model.objRental.ImageUrl" />
+                            <div class="col-4">
+                                <div class="mt-1 form-text">Current picture</div>
+                                <img class="img-thumbnail" src="@Model.objRental.ImageUrl" />
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-6 col-md-3">
+                        @if (Model.objRental.Id != 0)
+                        {
+                            <input asp-for="@Model.objRental.Id" type="hidden" />
+                        }
+                        <button type="submit" class="btn btn-primary form-control">@(Model.objRental.Id == 0 ? "Create" : "Update")</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-page="Index" class="btn btn-outline-primary border form-control">
+
+                            Back to List
+
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @section Scripts {
+        <script>
+            tinymce.init({
+                selector: 'textarea',
+                plugins: "lists",
+                menubar: "file edit format"
+            });
+                function ValidateInput() {
+                    if (document.getElementById('txtName').value == "") {
+                        Swal.fire('Error', 'Please Enter a Product Name', 'error');
+                        return false;
+                    }
+
+                    if (document.getElementById('txtUPC').value == "") {
+                        Swal.fire('Error', 'Please Enter a Product UPC', 'error');
+                        return false;
+                    }
+                    if (document.getElementById('txtSize').value == "") {
+                        Swal.fire('Error', 'Please Enter Product Size Information', 'error');
+                        return false;
+                    }
+
+                    if ($('#txtUnitPrice').val() < .01) {
+                        Swal.fire('Error', 'Please Enter a Unit Price Greater Than $.01', 'error');
+                        return false;
+                    }
+
+                    if ($('#txtListPrice').val() < .01) {
+                        Swal.fire('Error', 'Please Enter a List Price Greater Than $.01', 'error');
+                        return false;
+                    }
+
+                    if ($('#txtHalfDozenPrice').val() < .01) {
+                        Swal.fire('Error', 'Please Enter a Half Dozen+ Price Greater Than $.01', 'error');
+                        return false;
+                    }
+
+                    if ($('#txtDozenPrice').val() < .01) {
+                        Swal.fire('Error', 'Please Enter a Dozen+ Price Greater Than $.01', 'error');
+                        return false;
+                    }
+
+                    if (tinyMCE.get('txtDesc').getContent() == "") {
+                        Swal.fire('Error', 'Please Enter a Product Description', 'error');
+                        return false;
+                    }
+
+                    if (document.getElementById("uploadBox").value == "") {
+                        Swal.fire('Error', 'Please Select an Image', 'error')
+                        return false
+                    }
+
+                    if ($('#ddlCategory').prop('selectedIndex') === 0) {
+                        Swal.fire('Error', 'Please Select a Category', 'error');
+                        return false;
+                    }
+
+                    if ($('#ddlManufacturer').prop('selectedIndex') === 0) {
+                        Swal.fire('Error', 'Please Select a Manufacturer', 'error');
+                        return false;
+                    }
+                    return true;
+                }
+        </script>
+    }
+}
