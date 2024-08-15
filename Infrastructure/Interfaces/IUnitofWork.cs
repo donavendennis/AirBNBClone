@@ -13,6 +13,6 @@ namespace Infrastructure.Interfaces
         public IGenericRepository<Price> Price { get; }
         public IGenericRepository<Rental> Rental { get; }
         public IGenericRepository<RentalAmenity> RentalAmenity { get; }
-        public IGenericRepository<Reservation> Reservation { get; }
+        public IReservationRepository<Reservation> Reservation { get; }
     }
 }

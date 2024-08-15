@@ -31,7 +31,6 @@ namespace AirBNBClone.Pages.AdminPages.ReservationAdmin
                 return NotFound();
             }
 
-            objReservation.Rental = _unitOfWork.Rental.Get(x => x.Id == objReservation.RentalId);
             objReservation.User = _unitOfWork.ApplicationUser.Get(x => x.Id == objReservation.UserId);
 
             return Page();

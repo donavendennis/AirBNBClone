@@ -241,25 +241,59 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Carrier")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Confirm")
                         .HasColumnType("bit");
 
                     b.Property<DateOnly>("End")
                         .HasColumnType("date");
 
+                    b.Property<DateTime?>("OrderDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("OrderTotal")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PaymentDueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("RentalId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ShippingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateOnly>("Start")
                         .HasColumnType("date");
 
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RentalId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
                 });
@@ -586,13 +620,13 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Infrastructure.Models.Reservation", b =>
                 {
-                    b.HasOne("Infrastructure.Models.Rental", "Rental")
+                    b.HasOne("Infrastructure.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("RentalId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Rental");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
